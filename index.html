@@ -1,0 +1,1752 @@
+<style>
+    /* Variáveis de Cor */
+    :root{
+        --primary:#0b79d0; /* Azul Principal (Módulo 1 - Básico) */
+        --accent:#1e88e5;
+        --muted:#6b7280;
+        --bg:#f3f6fb;
+        --card:#ffffff;
+        --success:#28a745;
+        --danger:#e63946;
+        --text-color: #1f2937;
+        --close-color: #AAAAAA;
+        --teste-bg-light: #f7f9ff;
+        --teste-border-light: #e0e7ff;
+        
+        /* CORRETO: COR PARA O MÓDULO 2: VERDE TURQUESA */
+        --module2-color: #009688; 
+        /* NOVO: COR PARA O MÓDULO 3: VERDE ESCURO / ESMERALDA */
+        --module3-color: #008000;
+        
+        /* NOVO: Estilos do Menu Lateral */
+        --sidebar-width: 280px;
+        --sidebar-bg: #e6f0fa; /* Fundo suave para a lateral */
+        --sidebar-active-bg: #cce0f5; /* Fundo para aula ativa */
+        --link-hover-bg: #dbe7f4; 
+    }
+    
+    /* VARIÁVEIS PARA MODO NOTURNO */
+    body.dark-mode {
+        --bg:#1f2937;
+        --card:#374151;
+        --text-color: #f3f6fb;
+        --primary:#4f99e4; /* Azul mais claro no escuro */
+        --accent:#66b2ff;
+        --teste-bg-light: #374151;
+        --teste-border-light: #4b5563;
+        --module2-color: #4db6ac; 
+        --module3-color: #55b655;
+        /* NOVO: Estilos do Menu Lateral - Dark Mode */
+        --sidebar-bg: #2d3748; 
+        --sidebar-active-bg: #4a5568; 
+        --link-hover-bg: #3c4558;
+    }
+
+    /* Estilos do Corpo */
+    body{
+        margin:0;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg);
+        color:var(--text-color); 
+        transition: background-color 0.3s, color 0.3s;
+        
+        /* NOVO: Configuração Flexbox para Conteúdo Principal e Menu */
+        display: flex;
+        flex-direction: column; /* Padrão em telas pequenas */
+    }
+
+    /* Estilos do Cabeçalho - Mantido o full width */
+    header{
+        background: linear-gradient(90deg,var(--primary),var(--accent));
+        color:white;
+        text-align:center;
+        padding:30px 10px;
+        position: relative; 
+        /* NOVO: Garante que o header ocupe a largura total */
+        width: 100%;
+    }
+    /* Botões do Cabeçalho */
+    .btn-header {
+        position: absolute;
+        top: 15px;
+        background: none;
+        border: 1px solid white;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.3s;
+    }
+    .btn-header:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-dark-mode {
+        right: 15px;
+    }
+    /* Botão de voltar topo agora vai estar na tela de inscrição, ou volta para a aula anterior */
+    .btn-voltar-topo {
+        left: 15px;
+    }
+    
+    /* NOVO: Container que divide a tela em Menu Lateral e Conteúdo Principal */
+    .curso-container {
+        display: flex;
+        width: 100%;
+        min-height: calc(100vh - 90px); /* Garante que o container use o resto da altura da tela */
+    }
+
+    /* ------------------------------------- */
+    /* NOVO: Estilos do Menu de Navegação Lateral (Sidebar) */
+    /* ------------------------------------- */
+
+    .sidebar {
+        /* FIXO: Sidebar é fixo e rolável */
+        width: var(--sidebar-width);
+        background: var(--sidebar-bg);
+        padding: 20px 10px 20px 20px;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        overflow-y: auto; /* Permite rolar apenas o menu */
+        flex-shrink: 0; /* Impede que a sidebar diminua */
+    }
+    .sidebar h3 {
+        color: var(--primary);
+        font-size: 1.1rem;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+    }
+    /* Estilo do título do Módulo 2 no sidebar */
+    .sidebar h3.module-2-title {
+        color: var(--module2-color);
+        border-top: 1px solid var(--module2-color);
+    }
+    /* NOVO: Estilo do título do Módulo 3 no sidebar */
+    .sidebar h3.module-3-title {
+        color: var(--module3-color);
+        border-top: 1px solid var(--module3-color);
+    }
+    
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .sidebar li {
+        margin: 5px 0;
+    }
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-color);
+        padding: 8px 10px;
+        border-radius: 6px;
+        transition: background-color 0.2s, color 0.2s;
+    }
+    .sidebar a:hover {
+        background: var(--link-hover-bg);
+    }
+    .sidebar a.active-link {
+        background: var(--sidebar-active-bg);
+        font-weight: bold;
+        color: var(--primary);
+        border-left: 3px solid var(--primary);
+        padding-left: 7px;
+    }
+    .sidebar a.module-2-link.active-link {
+        color: var(--module2-color);
+        border-left: 3px solid var(--module2-color);
+    }
+    .sidebar a.module-3-link.active-link {
+        color: var(--module3-color);
+        border-left: 3px solid var(--module3-color);
+    }
+    .sidebar input[type="checkbox"] {
+        margin-right: 8px;
+        transform: scale(1.1);
+        pointer-events: none; /* Impede que o usuário clique no checkbox pelo menu */
+    }
+    
+    /* ------------------------------------- */
+    /* Estilos do Conteúdo Principal (Main) */
+    /* ------------------------------------- */
+    
+    main{
+        flex-grow: 1; /* Ocupa todo o espaço restante */
+        max-width: 800px; /* Limita a largura do conteúdo para melhor leitura */
+        margin: 30px auto;
+        background:var(--card);
+        padding:25px;
+        border-radius:12px;
+        box-shadow:0 4px 20px rgba(0,0,0,0.05);
+    }
+    /* Estilo do título dentro da aula (não o do sidebar) */
+    main > h2 {
+        color: var(--primary); 
+    }
+
+    /* Estilo do título do Módulo 2 (dentro da aula, ID 7 em diante) */
+    h2.module-2-title {
+        color: var(--module2-color);
+        border-top: 2px dashed var(--module2-color);
+        padding-top: 20px;
+        margin-top: 30px;
+    }
+    /* NOVO: Estilo do título do Módulo 3 (dentro da aula) */
+    h2.module-3-title {
+        color: var(--module3-color);
+        border-top: 2px dashed var(--module3-color);
+        padding-top: 20px;
+        margin-top: 30px;
+    }
+    
+    /* Oculta o título do Módulo 2/3 da página principal, pois já está no sidebar */
+    #tituloModulo2, #tituloModulo3 {
+        display: none !important;
+    }
+
+    /* Estilos dos Botões de Navegação */
+    .btn{
+        background:var(--primary); /* MÓDULO 1 USA AZUL PADRÃO */
+        color:white;
+        border:none;
+        padding:10px 15px;
+        border-radius:10px;
+        cursor:pointer;
+        font-weight:600;
+        margin-top:15px;
+        transition:all .3s;
+    }
+    .btn-module2 {
+        background: var(--module2-color) !important;
+    }
+    .btn-module3 {
+        background: var(--module3-color) !important;
+    }
+    .btn:hover{background:var(--accent);transform:scale(1.02);}
+    .btn-module2:hover {
+        background: #00796b !important; /* Verde mais escuro no hover */
+    }
+    .btn-module3:hover {
+        background: #006600 !important; /* Verde mais escuro no hover */
+    }
+
+    /* Estilos dos Testes */
+    .teste-pergunta {
+        /* ... (mantido) ... */
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid var(--teste-border-light);
+        border-radius: 8px;
+        background-color: var(--teste-bg-light);
+    }
+    /* CORREÇÃO DO MODO NOTURNO PARA LEGIBILIDADE NO TESTE */
+    body.dark-mode .teste-pergunta p,
+    body.dark-mode .teste-pergunta label {
+        color: black !important; /* Força o texto para preto */
+    }
+    body.dark-mode .teste-pergunta {
+        background-color: #e5e7eb; /* Fundo claro para o teste no modo escuro */
+    }
+    
+    /* Estilos do pop-up de Certificado de Inscrição (amarelo) (mantido) */
+    .popup-bg{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.7);
+        display:none;
+        align-items:center;
+        justify-content:center;
+        z-index:999;
+    }
+    .certificado{
+        /* Borda de Diploma */
+        border: 8px solid var(--primary);
+        border-image: linear-gradient(45deg, var(--primary), var(--accent), var(--primary)) 1;
+        padding: 40px;
+        border-radius: 0; 
+        margin-top: 10px;
+        text-align: center;
+        background: white; 
+        color: black !important; 
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    
+    /* NOVO: Estilos do Certificado de Conclusão (Azul e Verde Esmeralda) */
+    .certificado-conclusao {
+        width: 100%;
+        max-width: 800px;
+        min-height: 600px;
+        background: white;
+        border: 10px solid transparent;
+        border-image: linear-gradient(135deg, var(--primary), var(--module3-color), var(--primary)) 1;
+        padding: 50px 30px;
+        box-sizing: border-box;
+        text-align: center;
+        position: relative;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .certificado-conclusao .coroa {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 30px;
+        line-height: 1;
+        color: black;
+        opacity: 0.8;
+    }
+    .certificado-conclusao h1 {
+        color: var(--primary);
+        font-size: 2.8rem;
+        margin-top: 40px;
+        text-transform: uppercase;
+        border-bottom: 2px solid var(--module3-color);
+        padding-bottom: 10px;
+    }
+    .certificado-conclusao h2 {
+        color: #333;
+        font-size: 1.5rem;
+        margin-top: 10px;
+    }
+    .certificado-conclusao .texto-principal {
+        font-size: 1.2rem;
+        margin: 30px 0 10px 0;
+        color: #555;
+    }
+    .certificado-conclusao h3 {
+        font-size: 2.2rem;
+        color: var(--module3-color);
+        margin: 5px 0 30px 0;
+        padding: 5px 20px;
+        border-bottom: 2px dotted #ccc;
+        display: inline-block;
+    }
+    .certificado-conclusao .info-aluno {
+        display: flex;
+        justify-content: space-around;
+        margin: 30px 0 50px 0;
+        font-size: 0.9rem;
+    }
+    .certificado-conclusao .assinaturas {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 50px;
+    }
+    .certificado-conclusao .assinatura-box {
+        width: 40%;
+        text-align: center;
+    }
+    .certificado-conclusao .assinatura-box hr {
+        border: none;
+        border-top: 1px solid #333;
+        margin-bottom: 5px;
+    }
+    .certificado-conclusao .qrcode-area {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        border: 1px solid #333;
+        line-height: 1.1;
+        font-size: 0.7rem;
+        padding: 5px;
+    }
+
+
+    /* Estilos responsivos */
+    @media (max-width: 900px) {
+        .curso-container {
+            flex-direction: column; /* Coloca o menu em cima do conteúdo em telas pequenas */
+        }
+        .sidebar {
+            width: 100%;
+            max-height: 250px; /* Limita a altura do menu para não ocupar a tela toda */
+            overflow-y: scroll;
+        }
+        main {
+            margin: 20px auto;
+        }
+        .certificado-conclusao {
+            min-height: 400px;
+            padding: 30px 15px;
+        }
+        .certificado-conclusao h1 {
+            font-size: 1.8rem;
+        }
+        .certificado-conclusao h3 {
+            font-size: 1.5rem;
+        }
+        .certificado-conclusao .texto-principal {
+            font-size: 1rem;
+        }
+        .certificado-conclusao .assinaturas {
+            flex-direction: column;
+        }
+        .certificado-conclusao .assinatura-box {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .certificado-conclusao .qrcode-area {
+            position: static;
+            margin: 20px auto 0;
+        }
+    }
+
+</style>
+<header>
+    <button class="btn-header btn-voltar-topo" onclick="navegarParaAnterior()">← Voltar</button>
+    
+    <h1>Curso Completo de Marketing Digital</h1>
+    <p>Aprenda do zero a criar sua presença digital e vender pela internet</p>
+    
+    <button class="btn-header btn-dark-mode" id="darkModeToggle" onclick="toggleDarkMode()">Modo Noturno 🌙</button>
+</header>
+<main id="telaInscricao" class="inscricao">
+    <h2>Inscreva-se para começar o curso</h2>
+    <p>Preencha seus dados para gerar seu acesso e certificado de inscrição:</p>
+    <input type="text" id="nomeAluno" placeholder="Seu nome completo"><br>
+    <input type="text" id="cpfAluno" placeholder="Seu CPF (somente números)"><br>
+    <button class="btn" onclick="iniciarCurso()">Iniciar Curso</button>
+    <br>
+    <button class="btn" style="background:#10b981" onclick="abrirCertificadoInscricao()">Ver Certificado de Inscrição</button>
+</main>
+
+<div class="curso-container" id="cursoContainer" class="hidden">
+    
+    <div class="sidebar" id="sidebarMenu">
+        <h3>Módulo 1 – Básico</h3>
+        <ul id="menu-modulo-1">
+            <li><a href="#" class="aula-link active-link" data-aula-id="1" onclick="mostrarAula(1)"><input type="checkbox" class="aula-checkbox" data-aula="m1a1"> Aula 1 — O que é Marketing Digital</a></li>
+            <li><a href="#" class="aula-link" data-aula-id="2" onclick="mostrarAula(2)"><input type="checkbox" class="aula-checkbox" data-aula="m1a2"> Aula 2 — Redes Sociais</a></li>
+            <li><a href="#" class="aula-link" data-aula-id="3" onclick="mostrarAula(3)"><input type="checkbox" class="aula-checkbox" data-aula="m1a3"> Aula 3 — SEO e Conteúdo</a></li>
+            <li><a href="#" class="aula-link" data-aula-id="4" onclick="mostrarAula(4)"><input type="checkbox" class="aula-checkbox" data-aula="m1a4"> Aula 4 — E-mail Marketing</a></li>
+            <li><a href="#" class="aula-link" data-aula-id="5" onclick="mostrarAula(5)"><input type="checkbox" class="aula-checkbox" data-aula="m1a5"> Aula 5 — Revisão e Próximo Módulo</a></li>
+            <li><a href="#" class="aula-link" data-aula-id="6" onclick="abrirTesteM1()">Teste Final M1</a></li>
+        </ul>
+        
+        <div id="modulo2MenuContainer" class="hidden">
+            <h3 class="module-2-title">Módulo 2 – Intermediário</h3>
+            <ul id="menu-modulo-2">
+                 <li><a href="#" class="aula-link module-2-link" data-aula-id="7" onclick="mostrarAula(7)"><input type="checkbox" class="aula-checkbox" data-aula="m2a1"> Aula 1 — Conceitos Avançados</a></li>
+                 <li><a href="#" class="aula-link module-2-link" data-aula-id="8" onclick="mostrarAula(8)"><input type="checkbox" class="aula-checkbox" data-aula="m2a2"> Aula 2 — Métodos e Procedimentos</a></li>
+                 <li><a href="#" class="aula-link module-2-link" data-aula-id="9" onclick="mostrarAula(9)"><input type="checkbox" class="aula-checkbox" data-aula="m2a3"> Aula 3 — Exercícios Práticos</a></li>
+                 <li><a href="#" class="aula-link module-2-link" data-aula-id="10" onclick="mostrarAula(10)"><input type="checkbox" class="aula-checkbox" data-aula="m2a4"> Aula 4 — Integração e Análise</a></li>
+                 <li><a href="#" class="aula-link module-2-link" data-aula-id="11" onclick="mostrarAula(11)"><input type="checkbox" class="aula-checkbox" data-aula="m2a5"> Aula 5 — Revisão e Próximo Módulo</a></li>
+                 <li><a href="#" class="aula-link module-2-link" data-aula-id="12" onclick="abrirTesteM2()">Teste Final M2</a></li>
+            </ul>
+        </div>
+
+        <div id="modulo3MenuContainer" class="hidden">
+            <h3 class="module-3-title">Módulo 3 – Avançado</h3>
+            <ul id="menu-modulo-3">
+                 <li><a href="#" class="aula-link module-3-link" data-aula-id="13" onclick="mostrarAula(13)"><input type="checkbox" class="aula-checkbox" data-aula="m3a1"> Aula 1 — Estratégias Avançadas</a></li>
+                 <li><a href="#" class="aula-link module-3-link" data-aula-id="14" onclick="mostrarAula(14)"><input type="checkbox" class="aula-checkbox" data-aula="m3a2"> Aula 2 — Ferramentas e Automação</a></li>
+                 <li><a href="#" class="aula-link module-3-link" data-aula-id="15" onclick="mostrarAula(15)"><input type="checkbox" class="aula-checkbox" data-aula="m3a3"> Aula 3 — Estudos de Caso e Aplicação</a></li>
+                 <li><a href="#" class="aula-link module-3-link" data-aula-id="16" onclick="mostrarAula(16)"><input type="checkbox" class="aula-checkbox" data-aula="m3a4"> Aula 4 — Solução de Problemas</a></li>
+                 <li><a href="#" class="aula-link module-3-link" data-aula-id="17" onclick="mostrarAula(17)"><input type="checkbox" class="aula-checkbox" data-aula="m3a5"> Aula 5 — Revisão Final</a></li>
+                 <li><a href="#" class="aula-link module-3-link" data-aula-id="18" onclick="abrirTesteM3()">Teste Final M3</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <main id="conteudoCurso">
+        
+        <h2 id="tituloPrincipalAula">Módulo 1 – Básico: Introdução ao Marketing Digital</h2>
+
+        <div id="aula-1-1" class="aula-pagina active" data-aula-id="1">
+            <div class="aula-text">
+                <p class="dica">💡 Você está na **Aula 1**. Use o menu lateral para navegar entre as aulas e marcar seu progresso.</p>
+                <h3>Objetivos desta aula</h3>
+                <p>Após esta aula, você deverá compreender claramente o que é Marketing Digital, por que ele é tão importante para empresas e profissionais, e quais áreas você irá estudar nos próximos módulos. Você já terá uma visão completa do que está por vir: aprender a usar redes sociais para engajamento, criar conteúdos que atraem clientes, enviar e-mails que fidelizam e revisar todo o conhecimento adquirido antes do teste final.</p>
+                <h3>Introdução ao Marketing Digital</h3>
+                <p>O Marketing Digital é a maneira de divulgar produtos, serviços ou marcas usando a internet e ferramentas digitais. Ele permite que empresas e profissionais alcancem seu público de forma muito mais eficiente, econômica e mensurável do que o marketing tradicional. Enquanto o marketing tradicional usa TV, rádio, jornais e outdoors, o Marketing Digital consegue atingir pessoas específicas que têm interesse no que você oferece e ainda permite acompanhar resultados em tempo real.</p>
+                <p class="dica">💡 Exemplo: Quando você pesquisa algo no Google ou vê anúncios no Instagram e Facebook, isso é Marketing Digital em ação. Ele não serve apenas para vender, mas também para educar, engajar e criar relacionamento com o público.</p>
+
+                <h3>Por que o Marketing Digital é importante</h3>
+                <p>O Marketing Digital é fundamental porque permite que empresas de qualquer tamanho alcancem pessoas em qualquer lugar do mundo, sem precisar de um grande investimento. Ele oferece formas mais baratas de anunciar e ainda possibilita medir os resultados, como quantas pessoas clicaram em um anúncio, compraram um produto ou interagiram com sua marca. Além disso, ele permite direcionar mensagens para pessoas com interesses específicos. Por exemplo, uma loja de roupas pode fazer com que apenas pessoas interessadas em moda e que moram na mesma cidade vejam suas ofertas. Isso torna as campanhas muito mais eficazes do que métodos tradicionais.</p>
+
+                <h3>Áreas principais que você vai estudar nos próximos módulos</h3>
+                <p>O Marketing Digital é dividido em diferentes áreas, que serão exploradas nos próximos módulos do curso. Cada área tem técnicas e estratégias próprias para ajudar a alcançar resultados.</p>
+                <ul>
+                    <li><strong>Redes Sociais:</strong> Você vai aprender a usar plataformas como Instagram, Facebook, TikTok e LinkedIn para criar conteúdo, interagir com o público e divulgar produtos ou serviços.</li>
+                    <li><strong>SEO e Marketing de Conteúdo:</strong> Você vai descobrir como criar textos, vídeos e posts que apareçam nos mecanismos de busca, como o Google, e atraiam pessoas de forma orgânica, sem precisar pagar por anúncios.</li>
+                    <li><strong>E-mail Marketing:</strong> Você vai aprender a enviar mensagens personalizadas para clientes, oferecendo promoções, conteúdos úteis e mantendo um relacionamento constante com quem já conhece sua marca.</li>
+                </ul>
+                <p>Na última aula, você terá um resumo do próximo módulo e fará um Teste Final para revisar e aplicar tudo que aprendeu ao longo do curso.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar" style="background:var(--muted); display: none;" onclick="proximaAula(1, -1)">← Aula Anterior</button>
+                <button class="btn" onclick="proximaAula(1, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-1-2" class="aula-pagina" data-aula-id="2">
+             <div class="aula-text">
+                <h3>Introdução às Redes Sociais no Marketing Digital</h3>
+                <p>As redes sociais são ferramentas poderosas no Marketing Digital, porque permitem que empresas e profissionais se conectem diretamente com seu público. Elas não servem apenas para postar fotos ou vídeos, mas também para divulgar produtos, engajar clientes e construir autoridade da marca. As plataformas mais utilizadas no Marketing Digital incluem Instagram, Facebook, TikTok, LinkedIn, YouTube e Pinterest. Cada rede social tem características próprias e atrai públicos diferentes, então é importante entender qual delas é a mais adequada para o seu negócio.</p>
+                <p class="dica">💡 Exemplo: Uma marca de roupas jovens pode ter mais sucesso no TikTok e Instagram, enquanto uma empresa B2B (que vende para outras empresas) pode se destacar no LinkedIn.</p>
+                
+                <h3>Por que usar redes sociais no Marketing Digital</h3>
+                <p>Redes sociais permitem criar relacionamentos próximos com clientes, mostrando o lado humano da marca. Elas ajudam a aumentar o reconhecimento da marca, gerar vendas e fidelizar clientes. Além disso, é possível segmentar o público que vai ver seu conteúdo ou anúncio. Isso significa que sua mensagem chega exatamente para pessoas que têm interesse no que você oferece, tornando suas campanhas muito mais eficazes e econômicas.</p>
+                <p class="dica">💡 Exemplo: Um café local pode criar anúncios que só aparecem para pessoas próximas à sua região, atraindo clientes reais para a loja.</p>
+                
+                <h3>Tipos de estratégias nas redes sociais</h3>
+                <p>Nas redes sociais, existem diferentes formas de atuar:</p>
+                <ul>
+                    <li><strong>Conteúdo orgânico:</strong> Postagens, fotos, vídeos e stories que aparecem para seguidores sem precisar pagar. Essa estratégia ajuda a engajar o público e construir autoridade.</li>
+                    <li><strong>Anúncios pagos:</strong> Postagens patrocinadas que aparecem para pessoas específicas, escolhidas por idade, interesse, localização e comportamento online.</li>
+                    <li><strong>Engajamento:</strong> Responder comentários, mensagens e interagir com o público para criar proximidade e confiança.</li>
+                    <li><strong>Parcerias e influenciadores:</strong> Trabalhar com pessoas que já têm público nas redes sociais para divulgar sua marca de forma mais natural.</li>
+                </ul>
+                <p class="dica">💡 Exemplo: Uma loja de calçados pode postar fotos de novos modelos (conteúdo orgânico), criar anúncios para pessoas que gostam de moda (anúncios pagos) e enviar mensagens respondendo dúvidas dos clientes (engajamento).</p>
+
+                <h3>Métricas importantes para acompanhar</h3>
+                <p>É fundamental medir os resultados das suas ações nas redes sociais. Algumas métricas importantes incluem:</p>
+                <ul>
+                    <li><strong>Alcance:</strong> Quantas pessoas viram sua postagem.</li>
+                    <li><strong>Engajamento:</strong> Curtidas, comentários, compartilhamentos e salvamentos.</li>
+                    <li><strong>Cliques em links:</strong> Quantas pessoas clicaram no link do seu site ou produto.</li>
+                    <li><strong>Conversões:</strong> Quantas pessoas compraram ou se inscreveram em algo depois de ver sua postagem ou anúncio.</li>
+                </ul>
+                <p class="dica">💡 Exemplo: Se você postar uma promoção e 500 pessoas clicarem no link para comprar, isso mostra que a campanha teve boa conversão.</p>
+                
+                <h3>Dicas para ter sucesso nas redes sociais</h3>
+                <ul>
+                    <li>Conheça seu público: saiba quem são, o que gostam e como se comportam.</li>
+                    <li>Publique com frequência: mantenha o perfil ativo para engajar seguidores.</li>
+                    <li>Produza conteúdo relevante: ofereça dicas, tutoriais, informações úteis ou entretenimento.</li>
+                    <li>Use imagens e vídeos de qualidade: conteúdos visuais chamam mais atenção.</li>
+                    <li>Analise resultados: acompanhe métricas e adapte suas estratégias com base nos dados.</li>
+                </ul>
+                
+                <h3>Resumo da Aula 2</h3>
+                <p>Redes sociais são canais essenciais do Marketing Digital que ajudam a engajar o público, divulgar produtos e construir autoridade da marca. Para ter sucesso, é importante combinar conteúdo orgânico, anúncios pagos, engajamento direto e parcerias estratégicas, sempre acompanhando métricas para medir resultados. Nos próximos módulos, você aprenderá a trabalhar com SEO e Marketing de Conteúdo, depois E-mail Marketing, e finalmente revisará tudo no Teste Final.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar" onclick="proximaAula(2, -1)">← Aula Anterior</button>
+                <button class="btn" onclick="proximaAula(2, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-1-3" class="aula-pagina" data-aula-id="3">
+             <div class="aula-text">
+                <h3>Introdução ao SEO e Marketing de Conteúdo</h3>
+                <p>O SEO (Search Engine Optimization, ou Otimização para Motores de Busca) e o Marketing de Conteúdo são ferramentas essenciais do Marketing Digital. Eles ajudam a atrair visitantes de forma orgânica, ou seja, sem precisar pagar por anúncios. Enquanto o SEO garante que seu site ou conteúdo apareça nas primeiras posições do Google e outros buscadores, o Marketing de Conteúdo é a estratégia de criar textos, vídeos, posts e materiais que eduquem, informem ou entretenham seu público.</p>
+                <p class="dica">💡 Exemplo: Um blog que ensina receitas de bolo pode aparecer no Google quando alguém pesquisa “como fazer bolo de chocolate”. Se o conteúdo for útil, as pessoas vão confiar na marca e podem comprar utensílios de cozinha ou ingredientes recomendados no site.</p>
+                
+                <h3>Por que SEO e Marketing de Conteúdo são importantes</h3>
+                <p>O SEO e o Marketing de Conteúdo ajudam a atrair visitantes qualificados, ou seja, pessoas que têm interesse real no que você oferece. Eles são fundamentais porque:</p>
+                <ul>
+                    <li>Aumentam o tráfego do site de forma orgânica, sem gastar com anúncios.</li>
+                    <li>Melhoram a autoridade da marca, mostrando conhecimento e confiabilidade.</li>
+                    <li>Ajudam a gerar leads e vendas a longo prazo, construindo relacionamento com o público.</li>
+                </ul>
+                <p class="dica">💡 Exemplo: Uma empresa de cursos online que publica artigos sobre “como aprender inglês rápido” atrai pessoas interessadas em estudar inglês. Essas pessoas podem se tornar clientes depois.</p>
+                
+                <h3>Principais estratégias de SEO</h3>
+                <p>O SEO envolve diversas práticas para que seu site ou conteúdo seja encontrado pelos motores de busca:</p>
+                <ul>
+                    <li><strong>Palavras-chave:</strong> Escolher as palavras ou frases que as pessoas digitam no Google relacionadas ao seu negócio.</li>
+                    <li><strong>Qualidade do conteúdo:</strong> Criar textos, vídeos ou posts que realmente ajudem ou informem o público.</li>
+                    <li><strong>Links internos e externos:</strong> Conectar páginas dentro do seu site e conseguir links de outros sites confiáveis.</li>
+                    <li><strong>Velocidade e responsividade:</strong> Ter um site rápido e que funcione bem em computadores e celulares.</li>
+                </ul>
+                <p class="dica">💡 Exemplo: Se você tem uma loja de tênis, usar palavras-chave como “tênis para corrida” ou “melhor tênis para treinar” ajuda seu site a aparecer para pessoas que buscam esses produtos.</p>
+                
+                <h3>Marketing de Conteúdo</h3>
+                <p>O Marketing de Conteúdo é criar materiais que atraem e envolvem o público, sem focar apenas na venda imediata. Pode ser feito através de blogs, vídeos, podcasts, posts em redes sociais e e-books. O objetivo é gerar confiança, autoridade e relacionamento com os visitantes, aumentando as chances de eles se tornarem clientes.</p>
+                
+                <h3>Dicas para ter sucesso com SEO e Conteúdo</h3>
+                <ul>
+                    <li>Produza conteúdo de qualidade e relevante para o seu público.</li>
+                    <li>Use palavras-chave de forma natural no texto e nos títulos.</li>
+                    <li>Crie títulos e descrições que chamem atenção nos motores de busca.</li>
+                    <li>Atualize conteúdos antigos para mantê-los relevantes.</li>
+                    <li>Analise resultados: veja quais conteúdos atraem mais visitantes e engajamento.</li>
+                </ul>
+                
+                <h3>Resumo da Aula 3</h3>
+                <p>SEO e Marketing de Conteúdo são estratégias do Marketing Digital que ajudam a atrair visitantes qualificados de forma orgânica, melhorar a autoridade da marca e gerar vendas ou leads. O SEO garante que seu conteúdo seja encontrado no Google, enquanto o Marketing de Conteúdo cria materiais que engajam, educam e fidelizam o público. Nos próximos módulos, você vai aprender a trabalhar com E-mail Marketing, e depois revisará todo o conteúdo no Teste Final.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar" onclick="proximaAula(3, -1)">← Aula Anterior</button>
+                <button class="btn" onclick="proximaAula(3, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-1-4" class="aula-pagina" data-aula-id="4">
+             <div class="aula-text">
+                <h3>Introdução ao E-mail Marketing</h3>
+                <p>O E-mail Marketing é uma das ferramentas mais eficazes do Marketing Digital. Ele consiste em enviar mensagens personalizadas para pessoas que já demonstraram interesse na sua marca, produtos ou serviços. Ao contrário de redes sociais ou anúncios pagos, o E-mail Marketing permite uma comunicação direta e segmentada, fortalecendo o relacionamento com os clientes.</p>
+                <p class="dica">💡 Exemplo: Uma loja de roupas envia um e-mail com promoções especiais para clientes que já compraram no site. Esse tipo de mensagem aumenta a chance de novas compras e fideliza o cliente.</p>
+                
+                <h3>Por que o E-mail Marketing é importante</h3>
+                <p>O E-mail Marketing é importante porque permite:</p>
+                <ul>
+                    <li>Manter contato direto com clientes e leads (pessoas interessadas no seu negócio).</li>
+                    <li>Promover produtos ou serviços de forma personalizada, oferecendo exatamente o que o cliente procura.</li>
+                    <li>Aumentar vendas e fidelização, reforçando a marca e incentivando novas compras.</li>
+                    <li>Mensurar resultados com precisão, como taxas de abertura, cliques e conversões.</li>
+                </ul>
+                
+                <h3>Tipos de E-mail Marketing</h3>
+                <p>Existem diferentes tipos de e-mails que podem ser usados de acordo com o objetivo:</p>
+                <ul>
+                    <li><strong>E-mails promocionais:</strong> Divulgam ofertas, descontos ou lançamentos de produtos.</li>
+                    <li><strong>E-mails de conteúdo:</strong> Compartilham informações úteis, como dicas, tutoriais e novidades do setor.</li>
+                    <li><strong>E-mails de relacionamento:</strong> Enviam mensagens personalizadas para manter contato e criar vínculo com o cliente.</li>
+                    <li><strong>E-mails de carrinho abandonado:</strong> Lembram o cliente de produtos que ele adicionou ao carrinho, mas não comprou.</li>
+                </ul>
+                <p class="dica">💡 Exemplo: Uma loja online envia um e-mail com dicas de decoração (conteúdo), um desconto especial na nova coleção (promocional) e um lembrete para concluir a compra de produtos deixados no carrinho (carrinho abandonado).</p>
+                
+                <h3>Boas práticas no E-mail Marketing</h3>
+                <p>Para ter sucesso no E-mail Marketing, é importante seguir algumas práticas:</p>
+                <ul>
+                    <li><strong>Segmente sua lista de contatos:</strong> envie mensagens relevantes para cada tipo de público.</li>
+                    <li><strong>Crie títulos chamativos:</strong> o assunto do e-mail é decisivo para que a pessoa abra a mensagem.</li>
+                    <li><strong>Personalize os e-mails:</strong> use o nome do cliente e adapte o conteúdo ao interesse dele.</li>
+                    <li><strong>Evite exageros:</strong> não envie e-mails em excesso para não irritar o cliente.</li>
+                    <li><strong>Analise os resultados:</strong> acompanhe métricas como taxa de abertura, cliques e conversões para melhorar suas campanhas.</li>
+                </ul>
+                
+                <h3>Resumo da Aula 4</h3>
+                <p>O E-mail Marketing é uma ferramenta essencial do Marketing Digital que permite comunicação direta, personalizada e segmentada com clientes e leads. Ele ajuda a aumentar vendas, fidelizar clientes e fortalecer a marca, podendo ser usado para enviar promoções, conteúdos úteis, lembretes e mensagens de relacionamento. No próximo módulo, você terá uma visão geral do que será estudado no final do curso, e depois fará o Teste Final, que reunirá todo o conhecimento adquirido nos módulos anteriores.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar" onclick="proximaAula(4, -1)">← Aula Anterior</button>
+                <button class="btn" onclick="proximaAula(4, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-1-5" class="aula-pagina" data-aula-id="5">
+            <div class="aula-text">
+                <h3>Visão geral do próximo módulo</h3>
+                <p>No próximo módulo, você vai revisar tudo que aprendeu até agora e se preparar para aplicar seus conhecimentos na prática. O objetivo é consolidar os conceitos de Marketing Digital, garantindo que você saiba como utilizar Redes Sociais, SEO, Marketing de Conteúdo e E-mail Marketing de forma estratégica. Além disso, você verá exemplos de como essas ferramentas funcionam juntas para criar campanhas completas, desde atrair visitantes até converter leads em clientes e fidelizá-los.</p>
+                <p class="dica">💡 Exemplo: Uma loja online pode usar um post no Instagram para chamar atenção (Redes Sociais), um blog com dicas sobre os produtos para atrair visitantes (SEO e Conteúdo), e depois enviar um e-mail com desconto para quem se interessou (E-mail Marketing).</p>
+                
+                <h3>Objetivo do Teste Final</h3>
+                <p>O Teste Final serve para você avaliar o quanto aprendeu durante o curso e identificar pontos que precisam de revisão. Ele vai reunir perguntas sobre todos os módulos:</p>
+                <ul>
+                    <li>Conceitos básicos de Marketing Digital</li>
+                    <li>Uso e estratégias em Redes Sociais</li>
+                    <li>SEO e Marketing de Conteúdo</li>
+                    <li>E-mail Marketing</li>
+                </ul>
+                <p>O teste é uma forma de fixar o conhecimento e se preparar para aplicar tudo na prática, seja para divulgar sua própria marca ou ajudar empresas a crescer online.</p>
+                
+                <h3>Como aplicar tudo o que foi aprendido</h3>
+                <p>Depois de concluir o teste, você deve estar pronto para criar campanhas de Marketing Digital completas. Para isso, lembre-se sempre do fluxo básico de qualquer estratégia digital:</p>
+                <ul>
+                    <li>Atrair pessoas interessadas usando Redes Sociais ou SEO</li>
+                    <li>Engajar o público com conteúdo relevante</li>
+                    <li>Converter visitantes em clientes com ofertas, e-mails ou promoções</li>
+                    <li>Reter clientes e fidelizá-los mantendo comunicação constante</li>
+                    <li>Analisar resultados e ajustar estratégias para melhorar os resultados</li>
+                </ul>
+                <p>Revise os conceitos, prepare-se e clique no botão abaixo para iniciar o desafio. <strong>Boa sorte!</strong></p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar" onclick="proximaAula(5, -1)">← Aula Anterior</button>
+                <button class="btn" onclick="abrirTesteM1()">Ir para o Teste Final →</button>
+            </div>
+        </div>
+
+        <div id="testeM1" class="aula-pagina" data-aula-id="6">
+            <h3>Teste Final — Módulo 1</h3>
+            <p>Responda às 10 perguntas abaixo para concluir o Módulo 1. Você precisa de 6 acertos para aprovação.</p>
+            <div id="perguntasM1">
+                <div class="teste-pergunta">
+                    <p>1) Qual é o principal benefício do Marketing Digital em relação ao Marketing tradicional?</p>
+                    <label><input type="radio" name="q1" value="errada"> Atingir apenas grandes públicos via TV e rádio</label><br>
+                    <label><input type="radio" name="q1" value="correta"> Ser mais mensurável, econômico e segmentado</label><br>
+                    <label><input type="radio" name="q1" value="errada"> Custo mais alto e impossibilidade de medir resultados</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q1','res1','m1')">Enviar</button>
+                    <span id="res1"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>2) O que a sigla SEO significa?</p>
+                    <label><input type="radio" name="q2" value="errada"> Social Engagement Optimization</label><br>
+                    <label><input type="radio" name="q2" value="correta"> Search Engine Optimization</label><br>
+                    <label><input type="radio" name="q2" value="errada"> Strategic Email Only</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q2','res2','m1')">Enviar</button>
+                    <span id="res2"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>3) Qual tipo de estratégia de redes sociais envolve postagens que aparecem para seguidores sem precisar pagar?</p>
+                    <label><input type="radio" name="q3" value="correta"> Conteúdo orgânico</label><br>
+                    <label><input type="radio" name="q3" value="errada"> Anúncios pagos (patrocinados)</label><br>
+                    <label><input type="radio" name="q3" value="errada"> E-mail Marketing</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q3','res3','m1')">Enviar</button>
+                    <span id="res3"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>4) Qual é o objetivo principal do Marketing de Conteúdo?</p>
+                    <label><input type="radio" name="q4" value="errada"> Vender imediatamente com anúncios agressivos</label><br>
+                    <label><input type="radio" name="q4" value="correta"> Atrair e envolver o público com materiais que eduquem ou informem</label><br>
+                    <label><input type="radio" name="q4" value="errada"> Criar links de spam para o site</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q4','res4','m1')">Enviar</button>
+                    <span id="res4"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>5) Qual métrica é usada no E-mail Marketing para saber quantas pessoas abriram a mensagem?</p>
+                    <label><input type="radio" name="q5" value="errada"> Taxa de engajamento</label><br>
+                    <label><input type="radio" name="q5" value="correta"> Taxa de abertura</label><br>
+                    <label><input type="radio" name="q5" value="errada"> Alcance (reach)</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q5','res5','m1')">Enviar</button>
+                    <span id="res5"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>6) Qual destas não é uma estratégia de SEO?</p>
+                    <label><input type="radio" name="q6" value="correta"> Enviar mensagens diretas de vendas para contatos frios</label><br>
+                    <label><input type="radio" name="q6" value="errada"> Usar palavras-chave relevantes no conteúdo</label><br>
+                    <label><input type="radio" name="q6" value="errada"> Ter um site rápido e responsivo</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q6','res6','m1')">Enviar</button>
+                    <span id="res6"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>7) O que é "segmentar o público" nas redes sociais?</p>
+                    <label><input type="radio" name="q7" value="errada"> Postar o mesmo conteúdo em todas as redes</label><br>
+                    <label><input type="radio" name="q7" value="correta"> Direcionar anúncios ou conteúdo para pessoas com interesses, idades ou localizações específicas</label><br>
+                    <label><input type="radio" name="q7" value="errada"> Focar apenas em obter um grande número de seguidores</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q7','res7','m1')">Enviar</button>
+                    <span id="res7"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>8) O que são "leads" no contexto do E-mail Marketing?</p>
+                    <label><input type="radio" name="q8" value="correta"> Pessoas que demonstraram interesse no seu negócio (por exemplo, fornecendo um e-mail)</label><br>
+                    <label><input type="radio" name="q8" value="errada"> Mensagens que foram para a caixa de spam</label><br>
+                    <label><input type="radio" name="q8" value="errada"> Os resultados de anúncios pagos</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q8','res8','m1')">Enviar</button>
+                    <span id="res8"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>9) A principal função do E-mail de "carrinho abandonado" é:</p>
+                    <label><input type="radio" name="q9" value="errada"> Enviar o certificado de conclusão do curso</label><br>
+                    <label><input type="radio" name="q9" value="correta"> Lembrar o cliente de produtos que ele adicionou ao carrinho, mas não comprou</label><br>
+                    <label><input type="radio" name="q9" value="errada"> Convidar a pessoa para seguir a marca nas redes sociais</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q9','res9','m1')">Enviar</button>
+                    <span id="res9"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>10) Qual área do Marketing Digital foca em otimizar o site para que ele apareça nas primeiras posições de mecanismos de busca como o Google?</p>
+                    <label><input type="radio" name="q10" value="correta"> SEO</label><br>
+                    <label><input type="radio" name="q10" value="errada"> Redes Sociais</label><br>
+                    <label><input type="radio" name="q10" value="errada"> Marketing Tradicional</label><br>
+                    <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q10','res10','m1')">Enviar</button>
+                    <span id="res10"></span>
+                </div>
+            </div>
+            <button class="btn btn-block" id="btnFinalizarTesteM1" onclick="finalizarTesteM1()" disabled>Finalizar Teste (0/10 Respondidas)</button>
+        </div>
+        
+        <h2 id="tituloModulo2" class="module-2-title">Módulo 2 – Intermediário: Estratégias de Crescimento</h2>
+
+        <div id="aula-2-1" class="aula-pagina" data-aula-id="7">
+             <div class="aula-text">
+                <h2 class="module-2-title">Aula 1 — Conceitos Avançados</h2>
+                <p>Neste módulo, você mergulhará em conceitos mais profundos do Marketing Digital, focando em funis de venda, jornadas do cliente e segmentação avançada. A diferença entre um marketing básico e um intermediário está na capacidade de mapear e otimizar cada etapa do processo de compra do seu cliente.</p>
+                <p><strong>Foco:</strong> Funil de Vendas (Topo, Meio e Fundo de Funil), Automação de Marketing.</p>
+             </div>
+             <div class="nav-actions">
+                <button class="btn btn-voltar btn-module2" onclick="proximaAula(7, -1)">← Aula Anterior</button>
+                <button class="btn btn-module2" onclick="proximaAula(7, 1)">Próxima aula →</button>
+             </div>
+        </div>
+        <div id="aula-2-2" class="aula-pagina" data-aula-id="8">
+            <div class="aula-text">
+                <h2 class="module-2-title">Aula 2 — Métodos e Procedimentos</h2>
+                <p>Esta aula aborda a implementação prática de estratégias como A/B testing, remarketing e o uso de Landing Pages para maximizar a taxa de conversão (CRO).</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module2" onclick="proximaAula(8, -1)">← Aula Anterior</button>
+                <button class="btn btn-module2" onclick="proximaAula(8, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-2-3" class="aula-pagina" data-aula-id="9">
+            <div class="aula-text">
+                <h2 class="module-2-title">Aula 3 — Exercícios Práticos</h2>
+                <p>Aplicação de técnicas de otimização de campanhas, análise de dados do Google Analytics (Métricas de Adoção, Ativação, Retenção, Receita e Recomendação).</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module2" onclick="proximaAula(9, -1)">← Aula Anterior</button>
+                <button class="btn btn-module2" onclick="proximaAula(9, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-2-4" class="aula-pagina" data-aula-id="10">
+            <div class="aula-text">
+                <h2 class="module-2-title">Aula 4 — Integração e Análise</h2>
+                <p>Como integrar ferramentas de CRM com E-mail Marketing e Redes Sociais. Interpretação de relatórios de campanha e cálculo de ROI (Retorno sobre Investimento).</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module2" onclick="proximaAula(10, -1)">← Aula Anterior</button>
+                <button class="btn btn-module2" onclick="proximaAula(10, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-2-5" class="aula-pagina" data-aula-id="11">
+            <div class="aula-text">
+                <h2 class="module-2-title">Aula 5 — Revisão e Próximo Módulo</h2>
+                <p>Revisão de todo o Módulo 2 e introdução aos temas avançados do Módulo 3, como Big Data, IA e Modelagem de Atribuição.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module2" onclick="proximaAula(11, -1)">← Aula Anterior</button>
+                <button class="btn btn-module2" onclick="abrirTesteM2()">Ir para o Teste Final M2 →</button>
+            </div>
+        </div>
+
+        <div id="testeM2" class="aula-pagina" data-aula-id="12">
+            <h3>Teste Final — Módulo 2</h3>
+            <p>Responda às 10 perguntas abaixo para concluir o Módulo 2. Você precisa de 6 acertos para aprovação.</p>
+            <div id="perguntasM2">
+                <div class="teste-pergunta">
+                    <p>1) O que o "Fundo de Funil" (Bottom of Funnel - BOFU) representa no Funil de Vendas?</p>
+                    <label><input type="radio" name="q2_1" value="errada"> O estágio inicial, onde o cliente está descobrindo um problema</label><br>
+                    <label><input type="radio" name="q2_1" value="correta"> O estágio final, onde o cliente está pronto para tomar a decisão de compra</label><br>
+                    <label><input type="radio" name="q2_1" value="errada"> O meio do funil, onde o cliente está considerando soluções</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_1','res2_1','m2')">Enviar</button>
+                    <span id="res2_1"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>2) Qual o objetivo principal do A/B Testing (Teste A/B) no Marketing Digital?</p>
+                    <label><input type="radio" name="q2_2" value="errada"> Reduzir o custo de aquisição de clientes</label><br>
+                    <label><input type="radio" name="q2_2" value="correta"> Comparar duas versões de uma página/anúncio para ver qual tem melhor desempenho de conversão</label><br>
+                    <label><input type="radio" name="q2_2" value="errada"> Automatizar o envio de e-mails</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_2','res2_2','m2')">Enviar</button>
+                    <span id="res2_2"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>3) Remarketing/Retargeting é uma estratégia que visa:</p>
+                    <label><input type="radio" name="q2_3" value="errada"> Atrair novos clientes que nunca ouviram falar da marca</label><br>
+                    <label><input type="radio" name="q2_3" value="correta"> Exibir anúncios para pessoas que já visitaram o site ou interagiram com a marca</label><br>
+                    <label><input type="radio" name="q2_3" value="errada"> Otimizar o ranqueamento no Google</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_3','res2_3','m2')">Enviar</button>
+                    <span id="res2_3"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>4) O que é uma Landing Page?</p>
+                    <label><input type="radio" name="q2_4" value="errada"> A página inicial de um site (homepage)</label><br>
+                    <label><input type="radio" name="q2_4" value="correta"> Uma página única e focada, criada com o objetivo de converter visitantes em leads ou clientes</label><br>
+                    <label><input type="radio" name="q2_4" value="errada"> O painel de controle de uma ferramenta de automação</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_4','res2_4','m2')">Enviar</button>
+                    <span id="res2_4"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>5) O que significa a métrica "Taxa de Conversão"?</p>
+                    <label><input type="radio" name="q2_5" value="errada"> O número total de visitantes do site</label><br>
+                    <label><input type="radio" name="q2_5" value="correta"> A porcentagem de visitantes que completa uma ação desejada (compra, inscrição, download)</label><br>
+                    <label><input type="radio" name="q2_5" value="errada"> O custo total de uma campanha</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_5','res2_5','m2')">Enviar</button>
+                    <span id="res2_5"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>6) Qual destas não é uma das 5 métricas do framework AARRR (Métricas Piratas)?</p>
+                    <label><input type="radio" name="q2_6" value="correta"> Alinhamento (Alignment)</label><br>
+                    <label><input type="radio" name="q2_6" value="errada"> Aquisição (Acquisition)</label><br>
+                    <label><input type="radio" name="q2_6" value="errada"> Retenção (Retention)</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_6','res2_6','m2')">Enviar</button>
+                    <span id="res2_6"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>7) O que é Automação de Marketing?</p>
+                    <label><input type="radio" name="q2_7" value="errada"> Contratar um time de vendas para ligar para todos os leads</label><br>
+                    <label><input type="radio" name="q2_7" value="correta"> Uso de software para automatizar processos repetitivos (como envio de e-mails segmentados ou posts)</label><br>
+                    <label><input type="radio" name="q2_7" value="errada"> Criar conteúdo de blog manualmente todos os dias</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_7','res2_7','m2')">Enviar</button>
+                    <span id="res2_7"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>8) Qual ferramenta é mais usada para análise detalhada do comportamento do usuário no site (origem, taxa de rejeição, tempo na página)?</p>
+                    <label><input type="radio" name="q2_8" value="errada"> Plataformas de E-mail Marketing</label><br>
+                    <label><input type="radio" name="q2_8" value="correta"> Google Analytics</label><br>
+                    <label><input type="radio" name="q2_8" value="errada"> Facebook Ads Manager</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_8','res2_8','m2')">Enviar</button>
+                    <span id="res2_8"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>9) A otimização para celular (Mobile Responsiveness) é crucial porque:</p>
+                    <label><input type="radio" name="q2_9" value="errada"> Apenas usuários de desktop realizam compras</label><br>
+                    <label><input type="radio" name="q2_9" value="correta"> A maioria dos acessos e pesquisas hoje vêm de dispositivos móveis, e o Google penaliza sites não responsivos</label><br>
+                    <label><input type="radio" name="q2_9" value="errada"> Isso só afeta o SEO e não a experiência do usuário</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_9','res2_9','m2')">Enviar</button>
+                    <span id="res2_9"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>10) O que é ROI (Return on Investment)?</p>
+                    <label><input type="radio" name="q2_10" value="correta"> Uma métrica que calcula o lucro ou prejuízo gerado a partir de um investimento em Marketing</label><br>
+                    <label><input type="radio" name="q2_10" value="errada"> O custo por clique em um anúncio</label><br>
+                    <label><input type="radio" name="q2_10" value="errada"> O tempo que o cliente gasta em uma Landing Page</label><br>
+                    <button class="btn-teste btn-module2" onclick="verificarResposta('q2_10','res2_10','m2')">Enviar</button>
+                    <span id="res2_10"></span>
+                </div>
+            </div>
+            <button class="btn btn-block btn-module2" id="btnFinalizarTesteM2" onclick="finalizarTesteM2()" disabled>Finalizar Teste (0/10 Respondidas)</button>
+        </div>
+        
+        
+        <h2 id="tituloModulo3" class="module-3-title">Módulo 3 – Avançado: Inovação e Crescimento Exponencial</h2>
+        <div id="aula-3-1" class="aula-pagina" data-aula-id="13">
+             <div class="aula-text">
+                <h2 class="module-3-title">Aula 1 — Estratégias Avançadas</h2>
+                <p>O Módulo Avançado aborda temas de ponta, como Growth Hacking, marketing baseado em dados (Data-Driven Marketing) e uso de Big Data para predição de comportamento do consumidor.</p>
+             </div>
+             <div class="nav-actions">
+                <button class="btn btn-voltar btn-module3" onclick="proximaAula(13, -1)">← Aula Anterior</button>
+                <button class="btn btn-module3" onclick="proximaAula(13, 1)">Próxima aula →</button>
+             </div>
+        </div>
+
+        <div id="aula-3-2" class="aula-pagina" data-aula-id="14">
+            <div class="aula-text">
+                <h2 class="module-3-title">Aula 2 — Ferramentas e Automação</h2>
+                <p>Exploração de ferramentas de inteligência artificial (IA) para criação de conteúdo, Chatbots para atendimento ao cliente e plataformas de modelagem de atribuição avançada.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module3" onclick="proximaAula(14, -1)">← Aula Anterior</button>
+                <button class="btn btn-module3" onclick="proximaAula(14, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-3-3" class="aula-pagina" data-aula-id="15">
+            <div class="aula-text">
+                <h2 class="module-3-title">Aula 3 — Estudos de Caso e Aplicação</h2>
+                <p>Análise de campanhas de sucesso de grandes empresas que utilizaram estratégias avançadas de Growth Hacking e personalização massiva (Hyper-personalization).</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module3" onclick="proximaAula(15, -1)">← Aula Anterior</button>
+                <button class="btn btn-module3" onclick="proximaAula(15, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-3-4" class="aula-pagina" data-aula-id="16">
+            <div class="aula-text">
+                <h2 class="module-3-title">Aula 4 — Solução de Problemas</h2>
+                <p>Estratégias para lidar com queda de tráfego orgânico, baixa retenção de clientes e escalabilidade de campanhas pagas.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module3" onclick="proximaAula(16, -1)">← Aula Anterior</button>
+                <button class="btn btn-module3" onclick="proximaAula(16, 1)">Próxima aula →</button>
+            </div>
+        </div>
+
+        <div id="aula-3-5" class="aula-pagina" data-aula-id="17">
+            <div class="aula-text">
+                <h2 class="module-3-title">Aula 5 — Revisão Final</h2>
+                <p>Revisão de todos os conceitos do curso, do básico ao avançado, preparando o aluno para o teste final de conclusão.</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-voltar btn-module3" onclick="proximaAula(17, -1)">← Aula Anterior</button>
+                <button class="btn btn-module3" onclick="abrirTesteM3()">Ir para o Teste Final M3 →</button>
+            </div>
+        </div>
+
+        <div id="testeM3" class="aula-pagina" data-aula-id="18">
+            <h3>Teste Final — Módulo 3</h3>
+            <p>Responda às 10 perguntas abaixo para concluir o Módulo 3. Você precisa de 6 acertos para aprovação.</p>
+            <div id="perguntasM3">
+                <div class="teste-pergunta">
+                    <p>1) Qual conceito avançado se refere a testar rapidamente múltiplas ideias para encontrar o que gera mais crescimento?</p>
+                    <label><input type="radio" name="q3_1" value="errada"> E-mail Marketing</label><br>
+                    <label><input type="radio" name="q3_1" value="correta"> Growth Hacking</label><br>
+                    <label><input type="radio" name="q3_1" value="errada"> Marketing Tradicional</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_1','res3_1','m3')">Enviar</button>
+                    <span id="res3_1"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>2) O que é Modelagem de Atribuição no Marketing Digital?</p>
+                    <label><input type="radio" name="q3_2" value="errada"> A criação de chatbots para atendimento</label><br>
+                    <label><input type="radio" name="q3_2" value="correta"> O processo de identificar quais canais de marketing (cliques, anúncios) levam à conversão final</label><br>
+                    <label><input type="radio" name="q3_2" value="errada"> A otimização de imagens para o Google</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_2','res3_2','m3')">Enviar</button>
+                    <span id="res3_2"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>3) Qual é a principal característica do Data-Driven Marketing?</p>
+                    <label><input type="radio" name="q3_3" value="correta"> Tomar decisões de marketing e estratégias com base na análise de dados e métricas</label><br>
+                    <label><input type="radio" name="q3_3" value="errada"> Focar apenas em campanhas pagas</label><br>
+                    <label><input type="radio" name="q3_3" value="errada"> Usar apenas a intuição do gerente de marketing</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_3','res3_3','m3')">Enviar</button>
+                    <span id="res3_3"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>4) Como a Inteligência Artificial (IA) pode ser aplicada no Marketing?</p>
+                    <label><input type="radio" name="q3_4" value="errada"> Apenas para envio de mala direta impressa</label><br>
+                    <label><input type="radio" name="q3_4" value="correta"> Em chatbots para atendimento, criação automatizada de conteúdo e análise preditiva de clientes</label><br>
+                    <label><input type="radio" name="q3_4" value="errada"> Somente para a criação de logotipos</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_4','res3_4','m3')">Enviar</button>
+                    <span id="res3_4"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>5) O que a hiper-personalização (Hyper-personalization) busca?</p>
+                    <label><input type="radio" name="q3_5" value="correta"> Usar dados em tempo real para entregar conteúdo, ofertas e comunicações altamente relevantes e individualizadas</label><br>
+                    <label><input type="radio" name="q3_5" value="errada"> Criar apenas um tipo de anúncio para todos os públicos</label><br>
+                    <label><input type="radio" name="q3_5" value="errada"> Reduzir drasticamente o número de interações com o cliente</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_5','res3_5','m3')">Enviar</button>
+                    <span id="res3_5"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>6) Qual métrica é essencial para uma estratégia de Retenção de Clientes (Customer Retention)?</p>
+                    <label><input type="radio" name="q3_6" value="errada"> Alcance nas redes sociais</label><br>
+                    <label><input type="radio" name="q3_6" value="correta"> Customer Lifetime Value (CLV - Valor do Tempo de Vida do Cliente)</label><br>
+                    <label><input type="radio" name="q3_6" value="errada"> Taxa de rejeição (Bounce Rate)</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_6','res3_6','m3')">Enviar</button>
+                    <span id="res3_6"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>7) No contexto de Growth Hacking, o que significa o termo "North Star Metric" (Métrica Estrela do Norte)?</p>
+                    <label><input type="radio" name="q3_7" value="errada"> A métrica que rastreia os gastos com anúncios</label><br>
+                    <label><input type="radio" name="q3_7" value="correta"> A métrica única que melhor representa o valor que o produto/serviço entrega aos clientes e que guia o crescimento da empresa</label><br>
+                    <label><input type="radio" name="q3_7" value="errada"> A média de curtidas por post</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_7','res3_7','m3')">Enviar</button>
+                    <span id="res3_7"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>8) Qual é o principal risco de uma queda de tráfego orgânico?</p>
+                    <label><input type="radio" name="q3_8" value="errada"> O aumento do custo de aquisição de clientes</label><br>
+                    <label><input type="radio" name="q3_8" value="correta"> A perda de visibilidade e a dependência maior de canais pagos para atrair visitantes</label><br>
+                    <label><input type="radio" name="q3_8" value="errada"> A dificuldade em enviar e-mails</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_8','res3_8','m3')">Enviar</button>
+                    <span id="res3_8"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>9) O que é Big Data no Marketing?</p>
+                    <label><input type="radio" name="q3_9" value="correta"> Conjuntos de dados extremamente grandes e complexos que exigem ferramentas avançadas para análise e extração de insights</label><br>
+                    <label><input type="radio" name="q3_9" value="errada"> Apenas o número de visitantes mensais de um site</label><br>
+                    <label><input type="radio" name="q3_9" value="errada"> Uma estratégia de marketing baseada em outdoors</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_9','res3_9','m3')">Enviar</button>
+                    <span id="res3_9"></span>
+                </div>
+                <div class="teste-pergunta">
+                    <p>10) Para que serve uma 'Heatmap' (Mapa de Calor) no contexto de otimização de conversão (CRO)?</p>
+                    <label><input type="radio" name="q3_10" value="errada"> Para medir a temperatura do servidor do site</label><br>
+                    <label><input type="radio" name="q3_10" value="correta"> Para visualizar onde os usuários clicam, movem o mouse e rolam a página, identificando pontos de interesse e fricção</label><br>
+                    <label><input type="radio" name="q3_10" value="errada"> Para prever tendências futuras de mercado</label><br>
+                    <button class="btn-teste btn-module3" onclick="verificarResposta('q3_10','res3_10','m3')">Enviar</button>
+                    <span id="res3_10"></span>
+                </div>
+            </div>
+            <button class="btn btn-block btn-module3" id="btnFinalizarTesteM3" onclick="finalizarTesteM3()" disabled>Finalizar Teste (0/10 Respondidas)</button>
+        </div>
+        
+        </main>
+</div>
+
+<div id="certificadoInscricaoPopup" class="popup-bg" onclick="fecharCertificadoInscricao(event)">
+    <div class="certificado" id="certificadoInscricaoConteudo">
+        <span class="close-btn" onclick="fecharCertificadoInscricao(event)">&times;</span>
+        <h2>Certificado de Inscrição</h2>
+        <p>Certificamos que</p>
+        <h1 id="nomeCertificadoInscricao">Nome do Aluno</h1>
+        <p>está oficialmente inscrito no</p>
+        <h3>Curso Completo de Marketing Digital</h3>
+        <p>Data da Inscrição: <span id="dataInscricao"></span></p>
+        <p class="dica">Este certificado não é de conclusão, apenas de inscrição. Ele será gerado com o nome do CPF: <span id="cpfCertificadoInscricao"></span></p>
+        <button class="btn" style="background:#10b981; margin-top: 20px;" onclick="fecharCertificadoInscricao(event)">Ok, Entendi</button>
+    </div>
+</div>
+
+<div id="certificadoConclusaoPopup" class="popup-bg" onclick="fecharCertificadoConclusao(event)">
+    <div class="certificado-conclusao">
+        <span class="close-btn" onclick="fecharCertificadoConclusao(event)">&times;</span>
+        <div class="coroa">🌟</div>
+        <h1>Certificado de Conclusão</h1>
+        <p class="texto-principal">Conferimos o presente certificado a</p>
+        <h3 id="nomeCertificadoConclusao">Nome do Aluno</h3>
+        <p class="texto-principal">pela conclusão bem-sucedida do</p>
+        <h2>Curso Completo de Marketing Digital</h2>
+        <p class="texto-principal">com duração de 30 horas, obtendo uma <span id="percentualAprovacao">aprovação final com **XX%** de acerto.</span></p>
+        <div class="info-aluno">
+            <p><strong>CPF:</strong> <span id="cpfCertificadoConclusao"></span></p>
+            <p><strong>Data de Conclusão:</strong> <span id="dataConclusao"></span></p>
+        </div>
+        <div class="assinaturas">
+            <div class="assinatura-box">
+                <hr>
+                <p>Diretoria Pedagógica</p>
+            </div>
+            <div class="assinatura-box">
+                <hr>
+                <p>Instrutor Principal</p>
+            </div>
+        </div>
+        <div class="qrcode-area">
+            Código de Verificação <br> (Simulado)
+        </div>
+    </div>
+</div>
+
+<script>
+    // **********************************************
+    // VARIÁVEIS DE ESTADO E INICIALIZAÇÃO
+    // **********************************************
+
+    let nomeAluno = '';
+    let cpfAluno = '';
+    let aulaAtual = 1;
+    let modulo1Aprovado = false;
+    let modulo2Aprovado = false;
+    let modulo3Aprovado = false;
+    
+    // VARIÁVEIS DO TESTE M1 (Corrigidas para 10 questões)
+    let totalCorretasM1 = 0;
+    
+    // VARIÁVEIS DO TESTE M2 (Adicionadas para 10 questões)
+    let totalCorretasM2 = 0;
+    
+    // VARIÁVEIS DO TESTE M3 (Corrigidas/Completadas)
+    let totalCorretasM3 = 0;
+
+    // Objeto para armazenar o progresso das aulas (m1a1: true)
+    let progresso = {};
+
+    function carregarEstado() {
+        const estadoSalvo = localStorage.getItem('estadoCurso');
+        if (estadoSalvo) {
+            const estado = JSON.parse(estadoSalvo);
+            nomeAluno = estado.nomeAluno || '';
+            cpfAluno = estado.cpfAluno || '';
+            aulaAtual = estado.aulaAtual || 1;
+            modulo1Aprovado = estado.modulosAprovados.m1 || false;
+            modulo2Aprovado = estado.modulosAprovados.m2 || false;
+            modulo3Aprovado = estado.modulosAprovados.m3 || false;
+            progresso = estado.progresso || {};
+
+            // Se o nome do aluno existe, inicia o curso
+            if (nomeAluno) {
+                document.getElementById('telaInscricao').classList.add('hidden');
+                document.getElementById('cursoContainer').classList.remove('hidden');
+                
+                // Redireciona para a última aula vista ou a próxima a ser vista
+                let aulaParaMostrar = aulaAtual;
+
+                // Tenta encontrar a última aula ativa
+                if (modulo3Aprovado) {
+                    aulaParaMostrar = 18; // Concluído, mostra o teste final
+                } else if (modulo2Aprovado) {
+                    aulaParaMostrar = 13; // Começa no M3
+                } else if (modulo1Aprovado) {
+                    aulaParaMostrar = 7; // Começa no M2
+                }
+                
+                // Verifica se há progresso em aulas individuais (se pulou direto para o módulo)
+                for(let i = 17; i >= 1; i--) {
+                    const modulo = Math.ceil(i / 5);
+                    const aula = i - ((modulo - 1) * 5);
+                    const key = `m${modulo}a${aula}`;
+                    if (progresso[key]) {
+                         aulaParaMostrar = i; // Última aula feita
+                         break;
+                    }
+                }
+                
+                // Garante que se a última aula foi o teste, ele exibe o teste
+                if (aulaParaMostrar % 5 === 0 && aulaParaMostrar !== 5) {
+                    aulaParaMostrar = aulaParaMostrar + 1;
+                } else if (aulaParaMostrar === 5 && todasAulasConcluidas(1)) {
+                    aulaParaMostrar = 6;
+                } else if (aulaParaMostrar === 11 && todasAulasConcluidas(2)) {
+                    aulaParaMostrar = 12;
+                } else if (aulaParaMostrar === 17 && todasAulasConcluidas(3)) {
+                    aulaParaMostrar = 18;
+                }
+
+
+                mostrarAula(aulaParaMostrar, false);
+            }
+        }
+        
+        // Aplica o modo noturno ao carregar
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            const button = document.getElementById('darkModeToggle');
+            if (button) button.textContent = 'Modo Diurno ☀️';
+        }
+    }
+
+    function salvarEstado() {
+        const estado = {
+            nomeAluno: nomeAluno,
+            cpfAluno: cpfAluno,
+            aulaAtual: aulaAtual,
+            modulosAprovados: {
+                m1: modulo1Aprovado,
+                m2: modulo2Aprovado,
+                m3: modulo3Aprovado
+            },
+            progresso: progresso
+        };
+        localStorage.setItem('estadoCurso', JSON.stringify(estado));
+    }
+    
+    // **********************************************
+    // FUNÇÕES DE NAVEGAÇÃO E PROGRESSO
+    // **********************************************
+
+    function iniciarCurso() {
+        const nomeInput = document.getElementById('nomeAluno').value.trim();
+        const cpfInput = document.getElementById('cpfAluno').value.trim().replace(/\D/g, '');
+
+        if (!nomeInput) {
+            alert("Por favor, digite seu nome completo para iniciar.");
+            return;
+        }
+        if (cpfInput.length !== 11) {
+            alert("Por favor, digite um CPF válido (somente 11 números).");
+            return;
+        }
+
+        nomeAluno = nomeInput;
+        cpfAluno = cpfInput;
+        aulaAtual = 1;
+        salvarEstado();
+
+        document.getElementById('telaInscricao').classList.add('hidden');
+        document.getElementById('cursoContainer').classList.remove('hidden');
+        mostrarAula(1);
+    }
+    
+    function navegarParaAnterior() {
+        if (aulaAtual === 1) {
+            // Volta para a tela de inscrição
+            document.getElementById('telaInscricao').classList.remove('hidden');
+            document.getElementById('cursoContainer').classList.add('hidden');
+            // Atualiza o botão de modo noturno se for o caso
+            const button = document.getElementById('darkModeToggle');
+            if (button) button.textContent = document.body.classList.contains('dark-mode') ? 'Modo Diurno ☀️' : 'Modo Noturno 🌙';
+        } else {
+            // Volta para a aula anterior
+            proximaAula(aulaAtual, -1);
+        }
+    }
+
+    function mostrarAula(id, marcarProgresso = true) {
+        // Oculta todas as páginas de aula
+        document.querySelectorAll('.aula-pagina').forEach(aula => {
+            aula.classList.remove('active');
+        });
+        
+        // Remove o active-link de todos os links do sidebar
+        document.querySelectorAll('.aula-link').forEach(link => {
+            link.classList.remove('active-link');
+        });
+
+        // Encontra a aula e o link correspondentes ao ID
+        const aulaElemento = document.querySelector(`[data-aula-id="${id}"]`);
+        const linkElemento = document.querySelector(`[data-aula-id="${id}"]`);
+
+        if (aulaElemento) {
+            aulaElemento.classList.add('active');
+            aulaAtual = id;
+            
+            // Lógica de Título e Cores
+            let titulo = '';
+            let modulo = 1;
+            let corBotao = 'var(--primary)';
+            let tituloPrincipal = 'Módulo 1 – Básico: Introdução ao Marketing Digital';
+
+            if (id >= 1 && id <= 6) {
+                modulo = 1;
+                titulo = document.querySelector(`#menu-modulo-1 li:nth-child(${id}) a`).textContent;
+                corBotao = 'var(--primary)';
+            } else if (id >= 7 && id <= 12) {
+                modulo = 2;
+                titulo = document.querySelector(`#menu-modulo-2 li:nth-child(${id - 6}) a`).textContent;
+                corBotao = 'var(--module2-color)';
+                tituloPrincipal = 'Módulo 2 – Intermediário: Estratégias de Crescimento';
+            } else if (id >= 13 && id <= 18) {
+                modulo = 3;
+                titulo = document.querySelector(`#menu-modulo-3 li:nth-child(${id - 12}) a`).textContent;
+                corBotao = 'var(--module3-color)';
+                tituloPrincipal = 'Módulo 3 – Avançado: Inovação e Crescimento Exponencial';
+            }
+
+            document.getElementById('tituloPrincipalAula').textContent = tituloPrincipal;
+            document.getElementById('tituloPrincipalAula').style.color = corBotao;
+
+            // Lógica de botões de navegação
+            const btnVoltar = aulaElemento.querySelector('.btn-voltar');
+            if (btnVoltar) {
+                if (id === 1) {
+                    btnVoltar.style.display = 'none'; // Não exibe o botão de voltar na primeira aula
+                } else {
+                    btnVoltar.style.display = 'inline-block';
+                    btnVoltar.style.background = corBotao;
+                }
+            }
+            aulaElemento.querySelectorAll('.btn:not(.btn-voltar)').forEach(btn => btn.style.background = corBotao);
+
+            // Marcar a aula como vista (checkbox) e atualizar o link no menu
+            if (marcarProgresso && id % 6 !== 0) { // Não marca teste final como aula vista
+                const aulaNum = id - ((modulo - 1) * 6);
+                const key = `m${modulo}a${aulaNum}`;
+                progresso[key] = true;
+                const checkbox = document.querySelector(`.aula-checkbox[data-aula="m${modulo}a${aulaNum}"]`);
+                if (checkbox) checkbox.checked = true;
+            }
+
+        }
+        
+        if (linkElemento) {
+            linkElemento.classList.add('active-link');
+        }
+
+        salvarEstado();
+        checkModulosContainers(); // Verifica se precisa liberar o próximo módulo
+        checkBotoesDeAvanco(id); // Verifica se o botão de próxima aula deve levar ao próximo módulo/teste
+    }
+
+    function proximaAula(idAtual, direcao) {
+        let proximaId = idAtual + direcao;
+        
+        // Lógica para pular Testes Finais se estiver navegando para trás
+        if (direcao === -1 && (idAtual === 7 || idAtual === 13 || idAtual === 19)) {
+            proximaId -= 1; // Volta da Aula 1 do M2 para a Aula 5 do M1 (ID 6 - 1 = 5)
+        }
+
+        if (proximaId >= 1 && proximaId <= 18) {
+            // Verifica se a próxima aula está bloqueada (se for de um módulo não liberado)
+            if (proximaId >= 7 && !modulo1Aprovado) return;
+            if (proximaId >= 13 && !modulo2Aprovado) return;
+
+            // Lógica de pular aula para o teste final se a aula 5 estiver concluída
+            if (proximaId === 6 && todasAulasConcluidas(1) && !modulo1Aprovado) {
+                 abrirTesteM1();
+                 return;
+            } else if (proximaId === 12 && todasAulasConcluidas(2) && !modulo2Aprovado) {
+                 abrirTesteM2();
+                 return;
+            } else if (proximaId === 18 && todasAulasConcluidas(3) && !modulo3Aprovado) {
+                 abrirTesteM3();
+                 return;
+            }
+
+            mostrarAula(proximaId);
+        }
+    }
+    
+    function checkBotoesDeAvanco(idAtual) {
+         const aulaElemento = document.querySelector(`[data-aula-id="${idAtual}"]`);
+         const btnProximo = aulaElemento ? aulaElemento.querySelector('.nav-actions .btn:not(.btn-voltar)') : null;
+         
+         if (btnProximo) {
+            // Se for a última aula do módulo e as 5 aulas estiverem concluídas, o botão deve ir para o Teste
+            if (idAtual === 5 && todasAulasConcluidas(1) && !modulo1Aprovado) {
+                 btnProximo.textContent = 'Ir para o Teste Final →';
+                 btnProximo.onclick = abrirTesteM1;
+            } else if (idAtual === 11 && todasAulasConcluidas(2) && !modulo2Aprovado) {
+                 btnProximo.textContent = 'Ir para o Teste Final M2 →';
+                 btnProximo.onclick = abrirTesteM2;
+            } else if (idAtual === 17 && todasAulasConcluidas(3) && !modulo3Aprovado) {
+                 btnProximo.textContent = 'Ir para o Teste Final M3 →';
+                 btnProximo.onclick = abrirTesteM3;
+            } else {
+                 btnProximo.textContent = 'Próxima aula →';
+                 btnProximo.onclick = function() { proximaAula(idAtual, 1); };
+            }
+         }
+    }
+    
+    function todasAulasConcluidas(modulo) {
+        const totalAulas = 5;
+        for (let i = 1; i <= totalAulas; i++) {
+            const key = `m${modulo}a${i}`;
+            if (!progresso[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function checkModulosContainers() {
+        if (modulo1Aprovado) {
+            document.getElementById('modulo2MenuContainer').classList.remove('hidden');
+        } else {
+            document.getElementById('modulo2MenuContainer').classList.add('hidden');
+        }
+        if (modulo2Aprovado) {
+            document.getElementById('modulo3MenuContainer').classList.remove('hidden');
+        } else {
+            document.getElementById('modulo3MenuContainer').classList.add('hidden');
+        }
+    }
+
+    // **********************************************
+    // LÓGICA DO TESTE (COMPLETADA PARA M1, M2 E M3)
+    // **********************************************
+    
+    // Auxiliar para cores e mensagens
+    function verificarResposta(name, resId, modulo) {
+        const radios = document.getElementsByName(name);
+        const resElement = document.getElementById(resId);
+        let respostaCorreta = false;
+
+        for (const radio of radios) {
+            if (radio.checked) {
+                if (radio.value === 'correta') {
+                    resElement.textContent = 'Resposta Correta! ✅';
+                    resElement.style.color = 'var(--success)';
+                    respostaCorreta = true;
+                } else {
+                    resElement.textContent = 'Resposta Incorreta. Tente novamente! ❌';
+                    resElement.style.color = 'var(--danger)';
+                }
+                radio.disabled = true; // Desabilita após a resposta
+                break;
+            }
+        }
+        
+        // Incrementa a contagem de corretas
+        if (respostaCorreta) {
+            if (modulo === 'm1') totalCorretasM1++;
+            else if (modulo === 'm2') totalCorretasM2++;
+            else if (modulo === 'm3') totalCorretasM3++;
+        }
+        
+        if (modulo === 'm1') checkTotalCorretasM1();
+        else if (modulo === 'm2') checkTotalCorretasM2();
+        else if (modulo === 'm3') checkTotalCorretasM3();
+    }
+
+    // --- MÓDULO 1 ---
+    function abrirTesteM1() {
+        if (!todasAulasConcluidas(1)) {
+            alert('Você precisa concluir todas as aulas do Módulo 1 antes de fazer o Teste Final.');
+            return;
+        }
+        if (modulo1Aprovado) {
+             alert('Você já foi aprovado neste módulo! Continue para o Módulo 2.');
+             mostrarAula(7); // Vai para a Aula 1 do M2
+             return;
+        }
+        mostrarAula(6, false); // Aula ID 6 é o Teste M1
+        limparTesteM1(false); // Carrega o estado salvo ou limpa
+    }
+    
+    function limparTesteM1(voltar = false) {
+        totalCorretasM1 = 0;
+        document.querySelectorAll('#perguntasM1 input[type="radio"]').forEach(radio => {
+            radio.checked = false;
+            radio.disabled = false;
+        });
+        document.querySelectorAll('#perguntasM1 span').forEach(span => {
+            span.textContent = '';
+        });
+        const btnFinalizar = document.getElementById('btnFinalizarTesteM1');
+        if (btnFinalizar) {
+            btnFinalizar.textContent = "Finalizar Teste (0/10 Respondidas)";
+            btnFinalizar.onclick = finalizarTesteM1;
+            btnFinalizar.disabled = true;
+        }
+        if (voltar) mostrarAula(5);
+    }
+
+    function checkTotalCorretasM1() {
+        let questoesRespondidas = 0;
+        const perguntas = document.querySelectorAll('#perguntasM1 .teste-pergunta');
+        
+        // Reconta as corretas para garantir que o estado está correto (em caso de recarga ou erro)
+        totalCorretasM1 = 0;
+        for (const pergunta of perguntas) {
+            let respondida = false;
+            const radios = pergunta.querySelectorAll('input[type="radio"]');
+            for (const radio of radios) {
+                if (radio.checked) {
+                    respondida = true;
+                    if (radio.value === 'correta') {
+                        totalCorretasM1++;
+                    }
+                }
+            }
+            if (respondida) questoesRespondidas++;
+        }
+        
+        const btnFinalizar = document.getElementById('btnFinalizarTesteM1');
+        if (btnFinalizar) {
+             btnFinalizar.textContent = `Finalizar Teste (${questoesRespondidas}/10 Respondidas)`;
+             btnFinalizar.disabled = (questoesRespondidas !== 10);
+        }
+    }
+
+    function finalizarTesteM1() {
+        checkTotalCorretasM1(); 
+        const pontuacaoFinal = totalCorretasM1;
+        
+        if (pontuacaoFinal >= 6) {
+            alert(`Parabéns! Você acertou ${pontuacaoFinal} de 10. Módulo 1 Concluído com Sucesso!`);
+            modulo1Aprovado = true;
+            salvarEstado(); 
+
+            checkModulosContainers();
+            checkBotoesDeAvanco(6);
+
+            // Redireciona para a primeira aula do Módulo 2
+            mostrarAula(7); 
+
+        } else {
+            alert(`Você acertou ${pontuacaoFinal} de 10. Tente novamente! Você precisa de 6 acertos.`);
+            const btnFinalizarM1 = document.getElementById('btnFinalizarTesteM1');
+            if (btnFinalizarM1) {
+                btnFinalizarM1.textContent = "Tentar Novamente (Limpar Respostas)";
+                btnFinalizarM1.onclick = function() {
+                    limparTesteM1(true);
+                    mostrarAula(5); // Volta para a Aula 5 para revisar
+                };
+            }
+        }
+    }
+
+    // --- MÓDULO 2 ---
+    function abrirTesteM2() {
+        if (!todasAulasConcluidas(2)) {
+            alert('Você precisa concluir todas as aulas do Módulo 2 antes de fazer o Teste Final.');
+            return;
+        }
+        if (modulo2Aprovado) {
+             alert('Você já foi aprovado neste módulo! Continue para o Módulo 3.');
+             mostrarAula(13); // Vai para a Aula 1 do M3
+             return;
+        }
+        mostrarAula(12, false); // Aula ID 12 é o Teste M2
+        limparTesteM2(false);
+    }
+    
+    function limparTesteM2(voltar = false) {
+        totalCorretasM2 = 0;
+        document.querySelectorAll('#perguntasM2 input[type="radio"]').forEach(radio => {
+            radio.checked = false;
+            radio.disabled = false;
+        });
+        document.querySelectorAll('#perguntasM2 span').forEach(span => {
+            span.textContent = '';
+        });
+        const btnFinalizar = document.getElementById('btnFinalizarTesteM2');
+        if (btnFinalizar) {
+            btnFinalizar.textContent = "Finalizar Teste (0/10 Respondidas)";
+            btnFinalizar.onclick = finalizarTesteM2;
+            btnFinalizar.disabled = true;
+        }
+        if (voltar) mostrarAula(11);
+    }
+
+    function checkTotalCorretasM2() {
+        let questoesRespondidas = 0;
+        const perguntas = document.querySelectorAll('#perguntasM2 .teste-pergunta');
+        
+        totalCorretasM2 = 0;
+        for (const pergunta of perguntas) {
+            let respondida = false;
+            const radios = pergunta.querySelectorAll('input[type="radio"]');
+            for (const radio of radios) {
+                if (radio.checked) {
+                    respondida = true;
+                    if (radio.value === 'correta') {
+                        totalCorretasM2++;
+                    }
+                }
+            }
+            if (respondida) questoesRespondidas++;
+        }
+        
+        const btnFinalizar = document.getElementById('btnFinalizarTesteM2');
+        if (btnFinalizar) {
+             btnFinalizar.textContent = `Finalizar Teste (${questoesRespondidas}/10 Respondidas)`;
+             btnFinalizar.disabled = (questoesRespondidas !== 10);
+        }
+    }
+
+    function finalizarTesteM2() {
+        checkTotalCorretasM2(); 
+        const pontuacaoFinal = totalCorretasM2;
+        
+        if (pontuacaoFinal >= 6) {
+            alert(`Parabéns! Você acertou ${pontuacaoFinal} de 10. Módulo 2 Concluído com Sucesso!`);
+            modulo2Aprovado = true;
+            salvarEstado(); 
+
+            checkModulosContainers();
+            checkBotoesDeAvanco(12);
+
+            // Redireciona para a primeira aula do Módulo 3
+            mostrarAula(13); 
+
+        } else {
+            alert(`Você acertou ${pontuacaoFinal} de 10. Tente novamente! Você precisa de 6 acertos.`);
+            const btnFinalizarM2 = document.getElementById('btnFinalizarTesteM2');
+            if (btnFinalizarM2) {
+                btnFinalizarM2.textContent = "Tentar Novamente (Limpar Respostas)";
+                btnFinalizarM2.onclick = function() {
+                    limparTesteM2(true);
+                    mostrarAula(11); // Volta para a Aula 5 do M2 para revisar
+                };
+            }
+        }
+    }
+
+    // --- MÓDULO 3 ---
+    function abrirTesteM3() {
+        if (!todasAulasConcluidas(3)) {
+            alert('Você precisa concluir todas as aulas do Módulo 3 antes de fazer o Teste Final.');
+            return;
+        }
+        if (modulo3Aprovado) {
+             alert('Você já foi aprovado neste módulo e concluiu o curso!');
+             abrirCertificadoConclusao();
+             return;
+        }
+        mostrarAula(18, false); // Aula ID 18 é o Teste M3
+        limparTesteM3(false);
+    }
+    
+    function limparTesteM3(voltar = false) {
+        totalCorretasM3 = 0;
+        document.querySelectorAll('#perguntasM3 input[type="radio"]').forEach(radio => {
+            radio.checked = false;
+            radio.disabled = false;
+        });
+        document.querySelectorAll('#perguntasM3 span').forEach(span => {
+            span.textContent = '';
+        });
+        const btnFinalizar = document.getElementById('btnFinalizarTesteM3');
+        if (btnFinalizar) {
+            btnFinalizar.textContent = "Finalizar Teste (0/10 Respondidas)";
+            btnFinalizar.onclick = finalizarTesteM3;
+            btnFinalizar.disabled = true;
+        }
+        if (voltar) mostrarAula(17);
+    }
+
+    function checkTotalCorretasM3() {
+        let questoesRespondidas = 0;
+        const perguntas = document.querySelectorAll('#perguntasM3 .teste-pergunta');
+        
+        totalCorretasM3 = 0;
+        for (const pergunta of perguntas) {
+            let respondida = false;
+            const radios = pergunta.querySelectorAll('input[type="radio"]');
+            for (const radio of radios) {
+                if (radio.checked) {
+                    respondida = true;
+                    if (radio.value === 'correta') {
+                        totalCorretasM3++;
+                    }
+                }
+            }
+            if (respondida) questoesRespondidas++;
+        }
+        
+        const btnFinalizar = document.getElementById('btnFinalizarTesteM3');
+        if (btnFinalizar) {
+             btnFinalizar.textContent = `Finalizar Teste (${questoesRespondidas}/10 Respondidas)`;
+             btnFinalizar.disabled = (questoesRespondidas !== 10);
+        }
+    }
+
+    function finalizarTesteM3() {
+        checkTotalCorretasM3(); 
+        const pontuacaoFinal = totalCorretasM3;
+        
+        if (pontuacaoFinal >= 6) {
+            alert(`Parabéns! Você acertou ${pontuacaoFinal} de 10. Curso Completo Concluído com Sucesso!`);
+            modulo3Aprovado = true;
+            salvarEstado(); 
+
+            checkBotoesDeAvanco(18);
+            abrirCertificadoConclusao(); // Abre o certificado final
+
+        } else {
+            alert(`Você acertou ${pontuacaoFinal} de 10. Tente novamente! Você precisa de 6 acertos.`);
+            const btnFinalizarM3 = document.getElementById('btnFinalizarTesteM3');
+            if (btnFinalizarM3) {
+                btnFinalizarM3.textContent = "Tentar Novamente (Limpar Respostas)";
+                btnFinalizarM3.onclick = function() {
+                    limparTesteM3(true);
+                    mostrarAula(17); // Volta para a Aula 5 do M3 para revisar
+                };
+            }
+        }
+    }
+
+    // **********************************************
+    // FUNÇÕES DE CERTIFICADO
+    // **********************************************
+
+    function abrirCertificadoInscricao() {
+        if (!nomeAluno || !cpfAluno) {
+            alert("Por favor, preencha seu nome e CPF primeiro na tela de inscrição.");
+            return;
+        }
+        
+        document.getElementById('nomeCertificadoInscricao').textContent = nomeAluno;
+        document.getElementById('cpfCertificadoInscricao').textContent = cpfAluno;
+        document.getElementById('dataInscricao').textContent = new Date().toLocaleDateString('pt-BR');
+        document.getElementById('certificadoInscricaoPopup').style.display = 'flex';
+    }
+
+    function fecharCertificadoInscricao(event) {
+        if (event.target.classList.contains('popup-bg') || event.target.classList.contains('close-btn') || event.target.tagName === 'BUTTON') {
+            document.getElementById('certificadoInscricaoPopup').style.display = 'none';
+        }
+    }
+    
+    function abrirCertificadoConclusao() {
+        const totalQuestoes = 30; // 10 de cada módulo
+        const acertosTotais = totalCorretasM1 + totalCorretasM2 + totalCorretasM3;
+        const porcentagem = (acertosTotais / totalQuestoes) * 100;
+
+        document.getElementById('nomeCertificadoConclusao').textContent = nomeAluno;
+        document.getElementById('cpfCertificadoConclusao').textContent = cpfAluno;
+        document.getElementById('dataConclusao').textContent = new Date().toLocaleDateString('pt-BR');
+        
+        // REQUISIÇÃO: Aparecer a porcentagem de acertos
+        const percentualElement = document.getElementById('percentualAprovacao');
+        if(percentualElement) {
+             percentualElement.innerHTML = `aprovação final com **${porcentagem.toFixed(0)}%** de acerto.`;
+        }
+
+        document.getElementById('certificadoConclusaoPopup').style.display = 'flex';
+    }
+
+    function fecharCertificadoConclusao(event) {
+        if (event.target.classList.contains('popup-bg') || event.target.classList.contains('close-btn') || event.target.tagName === 'BUTTON') {
+             document.getElementById('certificadoConclusaoPopup').style.display = 'none';
+        }
+    }
+
+    // **********************************************
+    // FUNÇÃO DE MODO NOTURNO
+    // **********************************************
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        const button = document.getElementById('darkModeToggle');
+        if (isDarkMode) {
+            button.textContent = 'Modo Diurno ☀️';
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            button.textContent = 'Modo Noturno 🌙';
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    }
+    
+    // Aplica o modo noturno ao carregar
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        const button = document.getElementById('darkModeToggle');
+        if (button) button.textContent = 'Modo Diurno ☀️';
+    }
+
+
+    // **********************************************
+    // CARREGA ESTADO AO INICIAR
+    // **********************************************
+    window.onload = carregarEstado;
+</script>
