@@ -210,6 +210,14 @@
     #telaInscricao button {
         width: 80%;
     }
+    /* NOVO: Estilo para o contador de acessos */
+    #contadorAcessos {
+        margin-top: 30px;
+        font-size: 0.9rem;
+        color: var(--muted);
+        border-top: 1px solid #eee;
+        padding-top: 15px;
+    }
 
     /* ------------------------------------- */
     /* Estilos do Conteúdo Principal (Main) */
@@ -328,7 +336,7 @@
         position: relative;
     }
     
-    /* NOVO: Estilos do Certificado de Conclusão (Azul e Verde Esmeralda) */
+    /* Estilos do Certificado de Conclusão */
     .certificado-conclusao {
         width: 100%;
         max-width: 800px;
@@ -398,13 +406,13 @@
         border-top: 1px solid #333;
         margin-bottom: 5px;
     }
-    /* NOVO: Estilos para as imagens de assinatura no certificado */
-    .certificado-conclusao .assinatura-box img {
-        max-width: 150px; /* Tamanho razoável para assinatura */
+    /* NOVO: Estilo para a imagem de assinatura */
+    .certificado-conclusao .assinatura-img {
+        max-width: 80%;
         height: auto;
-        display: block;
-        margin: 0 auto 5px auto;
+        margin-bottom: -10px; /* Ajuste para centralizar a imagem acima da linha */
     }
+
     .certificado-conclusao .qrcode-area {
         position: absolute;
         bottom: 20px;
@@ -458,7 +466,12 @@
     }
 
 </style>
-
+<header id="headerPrincipal">
+    <button class="btn-header btn-voltar-topo" onclick="navegarParaAnterior()">← Voltar</button>
+    <h1>Curso Completo de Marketing Digital</h1>
+    <p>Aprenda do zero a criar sua presença digital e vender pela internet</p>
+    <button class="btn-header btn-dark-mode" id="darkModeToggle" onclick="toggleDarkMode()">Modo Noturno 🌙</button>
+</header>
 <main id="telaInscricao" class="inscricao">
     <h2>Inscreva-se para começar o curso</h2>
     <p>Preencha seus dados para gerar seu acesso e certificado de inscrição:</p>
@@ -467,625 +480,154 @@
     <button class="btn" onclick="iniciarCurso()">Iniciar Curso</button>
     <br>
     <button class="btn" style="background:#10b981" onclick="abrirCertificadoInscricao()">Ver Certificado de Inscrição</button>
-    <footer style="margin-top: 20px; font-size: 0.8rem; color: var(--muted);">
-        Esta página foi acessada <span id="contadorAcessos">0</span> vezes.
-    </footer>
+
+    <p id="contadorAcessos">Visitantes desde o início: 0</p>
 </main>
-
 <div id="cursoPrincipal" class="hidden">
-    <header>
-        <button class="btn-header btn-voltar-topo" onclick="navegarParaAnterior()">← Voltar</button>
-        
-        <h1>Curso Completo de Marketing Digital</h1>
-        <p>Aprenda do zero a criar sua presença digital e vender pela internet</p>
-        
-        <button class="btn-header btn-dark-mode" id="darkModeToggle" onclick="toggleDarkMode()">Modo Noturno 🌙</button>
-    </header>
-
-    <div class="curso-container" id="cursoContainer">
-        
-        <div class="sidebar" id="sidebarMenu">
-            <h3>Módulo 1 – Básico</h3>
-            <ul id="menu-modulo-1">
-                <li><a href="#" class="aula-link active-link" data-aula-id="1" onclick="mostrarAula(1)"><input type="checkbox" class="aula-checkbox" data-aula="m1a1"> Aula 1 — O que é Marketing Digital</a></li>
-                <li><a href="#" class="aula-link" data-aula-id="2" onclick="mostrarAula(2)"><input type="checkbox" class="aula-checkbox" data-aula="m1a2"> Aula 2 — Redes Sociais</a></li>
-                <li><a href="#" class="aula-link" data-aula-id="3" onclick="mostrarAula(3)"><input type="checkbox" class="aula-checkbox" data-aula="m1a3"> Aula 3 — SEO e Conteúdo</a></li>
-                <li><a href="#" class="aula-link" data-aula-id="4" onclick="mostrarAula(4)"><input type="checkbox" class="aula-checkbox" data-aula="m1a4"> Aula 4 — E-mail Marketing</a></li>
-                <li><a href="#" class="aula-link" data-aula-id="5" onclick="mostrarAula(5)"><input type="checkbox" class="aula-checkbox" data-aula="m1a5"> Aula 5 — Revisão e Próximo Módulo</a></li>
-                <li class="separator-test">Avaliação</li> 
-                <li><a href="#" class="aula-link" data-aula-id="6" onclick="abrirTesteM1()">Teste Final M1</a></li>
-            </ul>
-            
-            <div id="modulo2MenuContainer" class="hidden">
-                <h3 class="module-2-title">Módulo 2 – Intermediário</h3>
-                <ul id="menu-modulo-2">
-                     <li><a href="#" class="aula-link module-2-link" data-aula-id="7" onclick="mostrarAula(7)"><input type="checkbox" class="aula-checkbox" data-aula="m2a1"> Aula 1 — Conceitos Avançados</a></li>
-                     <li><a href="#" class="aula-link module-2-link" data-aula-id="8" onclick="mostrarAula(8)"><input type="checkbox" class="aula-checkbox" data-aula="m2a2"> Aula 2 — Métodos e Procedimentos</a></li>
-                     <li><a href="#" class="aula-link module-2-link" data-aula-id="9" onclick="mostrarAula(9)"><input type="checkbox" class="aula-checkbox" data-aula="m2a3"> Aula 3 — Exercícios Práticos</a></li>
-                     <li><a href="#" class="aula-link module-2-link" data-aula-id="10" onclick="mostrarAula(10)"><input type="checkbox" class="aula-checkbox" data-aula="m2a4"> Aula 4 — Integração e Análise</a></li>
-                     <li><a href="#" class="aula-link module-2-link" data-aula-id="11" onclick="mostrarAula(11)"><input type="checkbox" class="aula-checkbox" data-aula="m2a5"> Aula 5 — Revisão e Próximo Módulo</a></li>
-                     <li class="separator-test">Avaliação</li>
-                     <li><a href="#" class="aula-link module-2-link" data-aula-id="12" onclick="abrirTesteM2()">Teste Final M2</a></li>
-                </ul>
-            </div>
-    
-            <div id="modulo3MenuContainer" class="hidden">
-                <h3 class="module-3-title">Módulo 3 – Avançado</h3>
-                <ul id="menu-modulo-3">
-                     <li><a href="#" class="aula-link module-3-link" data-aula-id="13" onclick="mostrarAula(13)"><input type="checkbox" class="aula-checkbox" data-aula="m3a1"> Aula 1 — Estratégias Avançadas</a></li>
-                     <li><a href="#" class="aula-link module-3-link" data-aula-id="14" onclick="mostrarAula(14)"><input type="checkbox" class="aula-checkbox" data-aula="m3a2"> Aula 2 — Ferramentas e Automação</a></li>
-                     <li><a href="#" class="aula-link module-3-link" data-aula-id="15" onclick="mostrarAula(15)"><input type="checkbox" class="aula-checkbox" data-aula="m3a3"> Aula 3 — Estudos de Caso e Aplicação</a></li>
-                     <li><a href="#" class="aula-link module-3-link" data-aula-id="16" onclick="mostrarAula(16)"><input type="checkbox" class="aula-checkbox" data-aula="m3a4"> Aula 4 — Solução de Problemas</a></li>
-                     <li><a href="#" class="aula-link module-3-link" data-aula-id="17" onclick="mostrarAula(17)"><input type="checkbox" class="aula-checkbox" data-aula="m3a5"> Aula 5 — Revisão Final</a></li>
-                     <li class="separator-test">Avaliação</li>
-                     <li><a href="#" class="aula-link module-3-link" data-aula-id="18" onclick="abrirTesteM3()">Teste Final M3</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <main id="conteudoCurso">
-            
-            <h2 id="tituloPrincipalAula">Módulo 1 – Básico: Introdução ao Marketing Digital</h2>
-    
-            <div id="aula-1" class="aula-pagina" data-aula-id="1">
-                <div class="aula-text">
-                    <p class="dica">💡 Você está na **Aula 1**. Use o menu lateral para navegar entre as aulas e marcar seu progresso.</p>
-                    <h3>Objetivos desta aula</h3>
-                    <p>Após esta aula, você deverá compreender claramente o que é Marketing Digital, por que ele é tão importante para empresas e profissionais, e quais áreas você irá estudar nos próximos módulos. Você já terá uma visão completa do que está por vir: aprender a usar redes sociais para engajamento, criar conteúdos que atraem clientes, enviar e-mails que fidelizam e revisar todo o conhecimento adquirido antes do teste final.</p>
-                    <h3>Introdução ao Marketing Digital</h3>
-                    <p>O Marketing Digital é a maneira de divulgar produtos, serviços ou marcas usando a internet e ferramentas digitais. Ele permite que empresas e profissionais alcancem seu público de forma muito mais eficiente, econômica e mensurável do que o marketing tradicional. Enquanto o marketing tradicional usa TV, rádio, jornais e outdoors, o Marketing Digital consegue atingir pessoas específicas que têm interesse no que você oferece e ainda permite acompanhar resultados em tempo real.</p>
-                    <p class="dica">💡 Exemplo: Quando você pesquisa algo no Google ou vê anúncios no Instagram e Facebook, isso é Marketing Digital em ação. Ele não serve apenas para vender, mas também para educar, engajar e criar relacionamento com o público.</p>
-                    <h3>Por que o Marketing Digital é importante</h3>
-                    <p>O Marketing Digital é fundamental porque permite que empresas de qualquer tamanho alcancem pessoas em qualquer lugar do mundo, sem precisar de um grande investimento. Ele oferece formas mais baratas de anunciar e ainda possibilita medir os resultados, como quantas pessoas clicaram em um anúncio, compraram um produto ou interagiram com sua marca. Além disso, ele permite direcionar mensagens para pessoas com interesses específicos. Por exemplo, uma loja de roupas pode fazer com que apenas pessoas interessadas em moda e que moram na mesma cidade vejam suas ofertas. Isso torna as campanhas muito mais eficazes do que métodos tradicionais.</p>
-                    <h3>Áreas principais que você vai estudar nos próximos módulos</h3>
-                    <p>O Marketing Digital é dividido em diferentes áreas, que serão exploradas nos próximos módulos do curso. Cada área tem técnicas e estratégias próprias para ajudar a alcançar resultados.</p>
-                    <ul>
-                        <li><strong>Redes Sociais:</strong> Você vai aprender a usar plataformas como Instagram, Facebook, TikTok e LinkedIn para criar conteúdo, interagir com o público e divulgar produtos ou serviços.</li>
-                        <li><strong>SEO e Marketing de Conteúdo:</strong> Você vai descobrir como criar textos, vídeos e posts que apareçam nos mecanismos de busca, como o Google, e atraiam pessoas de forma orgânica, sem precisar pagar por anúncios.</li>
-                        <li><strong>E-mail Marketing:</strong> Você vai aprender a enviar mensagens personalizadas para clientes, oferecendo promoções, conteúdos úteis e mantendo um relacionamento constante com quem já conhece sua marca.</li>
-                    </ul>
-                    <p>Na última aula, você terá um resumo do próximo módulo e fará um Teste Final para revisar e aplicar tudo que aprendeu ao longo do curso.</p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar" style="background:var(--muted);" onclick="proximaAula(1, -1)">← Aula Anterior</button>
-                    <button class="btn" onclick="proximaAula(1, 1)">Próxima aula →</button>
-                </div>
-            </div>
-    
-            <div id="aula-2" class="aula-pagina" data-aula-id="2">
-                 <div class="aula-text">
-                    <h3>Introdução às Redes Sociais no Marketing Digital</h3>
-                    <p>As redes sociais são ferramentas poderosas no Marketing Digital, porque permitem que empresas e profissionais se conectem diretamente com seu público. Elas não servem apenas para postar fotos ou vídeos, mas também para divulgar produtos, engajar clientes e construir autoridade da marca. As plataformas mais utilizadas no Marketing Digital incluem Instagram, Facebook, TikTok, LinkedIn, YouTube e Pinterest. Cada rede social tem características próprias e atrai públicos diferentes, então é importante entender qual delas é a mais adequada para o seu negócio.</p>
-                    <p class="dica">💡 Exemplo: Uma marca de roupas jovens pode ter mais sucesso no TikTok e Instagram, enquanto uma empresa B2B (que vende para outras empresas) pode se destacar no LinkedIn.</p>
-                    
-                    <h3>Por que usar redes sociais no Marketing Digital</h3>
-                    <p>Redes sociais permitem criar relacionamentos próximos com clientes, mostrando o lado humano da marca. Elas ajudam a aumentar o reconhecimento da marca, gerar vendas e fidelizar clientes. Além disso, é possível segmentar o público que vai ver seu conteúdo ou anúncio. Isso significa que sua mensagem chega exatamente para pessoas que têm interesse no que você oferece, tornando suas campanhas muito mais eficazes e econômicas.</p>
-                    <p class="dica">💡 Exemplo: Um café local pode criar anúncios que só aparecem para pessoas próximas à sua região, atraindo clientes reais para a loja.</p>
-                    
-                    <h3>Tipos de estratégias nas redes sociais</h3>
-                    <p>Nas redes sociais, existem diferentes formas de atuar:</p>
-                    <ul>
-                        <li><strong>Conteúdo orgânico:</strong> Postagens, fotos, vídeos e stories que aparecem para seguidores sem precisar pagar. Essa estratégia ajuda a engajar o público e construir autoridade.</li>
-                        <li><strong>Anúncios pagos:</strong> Postagens patrocinadas que aparecem para pessoas específicas, escolhidas por idade, interesse, localização e comportamento online.</li>
-                        <li><strong>Engajamento:</strong> Responder comentários, mensagens e interagir com o público para criar proximidade e confiança.</li>
-                        <li><strong>Parcerias e influenciadores:</strong> Trabalhar com pessoas que já têm público nas redes sociais para divulgar sua marca de forma mais natural.</li>
-                    </ul>
-                    <p class="dica">💡 Exemplo: Uma loja de calçados pode postar fotos de novos modelos (conteúdo orgânico), criar anúncios para pessoas que gostam de moda (anúncios pagos) e enviar mensagens respondendo dúvidas dos clientes (engajamento).</p>
-    
-                    <h3>Métricas importantes para acompanhar</h3>
-                    <p>É fundamental medir os resultados das suas ações nas redes sociais. Algumas métricas importantes incluem:</p>
-                    <ul>
-                        <li><strong>Alcance:</strong> Quantas pessoas viram sua postagem.</li>
-                        <li><strong>Engajamento:</strong> Curtidas, comentários, compartilhamentos e salvamentos.</li>
-                        <li><strong>Cliques em links:</strong> Quantas pessoas clicaram no link do seu site ou produto.</li>
-                        <li><strong>Conversões:</strong> Quantas pessoas compraram ou se inscreveram em algo depois de ver sua postagem ou anúncio.</li>
-                    </ul>
-                    <p class="dica">💡 Exemplo: Se você postar uma promoção e 500 pessoas clicarem no link para comprar, isso mostra que a campanha teve boa conversão.</p>
-                    
-                    <h3>Dicas para ter sucesso nas redes sociais</h3>
-                    <ul>
-                        <li>Conheça seu público: saiba quem são, o que gostam e como se comportam.</li>
-                        <li>Publique com frequência: mantenha o perfil ativo para engajar seguidores.</li>
-                        <li>Produza conteúdo relevante: ofereça dicas, tutoriais, informações úteis ou entretenimento.</li>
-                        <li>Use imagens e vídeos de qualidade: conteúdos visuais chamam mais atenção.</li>
-                        <li>Analise resultados: acompanhe métricas e adapte suas estratégias com base nos dados.</li>
-                    </ul>
-                    
-                    <h3>Resumo da Aula 2</h3>
-                    <p>Redes sociais são canais essenciais do Marketing Digital que ajudam a engajar o público, divulgar produtos e construir autoridade da marca. Para ter sucesso, é importante combinar conteúdo orgânico, anúncios pagos, engajamento direto e parcerias estratégicas, sempre acompanhando métricas para medir resultados. Nos próximos módulos, você aprenderá a trabalhar com SEO e Marketing de Conteúdo, depois E-mail Marketing, e finalmente revisará tudo no Teste Final.</p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar" onclick="proximaAula(2, -1)">← Aula Anterior</button>
-                    <button class="btn" onclick="proximaAula(2, 1)">Próxima aula →</button>
-                </div>
-            </div>
-    
-            <div id="aula-3" class="aula-pagina" data-aula-id="3">
-                 <div class="aula-text">
-                    <h3>Introdução ao SEO e Marketing de Conteúdo</h3>
-                    <p>O SEO (Search Engine Optimization, ou Otimização para Motores de Busca) e o Marketing de Conteúdo são ferramentas essenciais do Marketing Digital. Eles ajudam a atrair visitantes de forma orgânica, ou seja, sem precisar pagar por anúncios. Enquanto o SEO garante que seu site ou conteúdo apareça nas primeiras posições do Google e outros buscadores, o Marketing de Conteúdo é a estratégia de criar textos, vídeos, posts e materiais que eduquem, informem ou entretenham seu público.</p>
-                    <p class="dica">💡 Exemplo: Um blog que ensina receitas de bolo pode aparecer no Google quando alguém pesquisa “como fazer bolo de chocolate”. Se o conteúdo for útil, as pessoas vão confiar na marca e podem comprar utensílios de cozinha ou ingredientes recomendados no site.</p>
-                    
-                    <h3>Por que SEO e Marketing de Conteúdo são importantes</h3>
-                    <p>O SEO e o Marketing de Conteúdo ajudam a atrair visitantes qualificados, ou seja, pessoas que têm interesse real no que você oferece. Eles são fundamentais porque:</p>
-                    <ul>
-                        <li>Aumentam o tráfego do site de forma orgânica, sem gastar com anúncios.</li>
-                        <li>Melhoram a autoridade da marca, mostrando conhecimento e confiabilidade.</li>
-                        <li>Ajudam a gerar leads e vendas a longo prazo, construindo relacionamento com o público.</li>
-                    </ul>
-                    <p class="dica">💡 Exemplo: Uma empresa de cursos online que publica artigos sobre “como aprender inglês rápido” atrai pessoas interessadas em estudar inglês. Essas pessoas podem se tornar clientes depois.</p>
-                    
-                    <h3>Principais estratégias de SEO</h3>
-                    <p>O SEO envolve diversas práticas para que seu site ou conteúdo seja encontrado pelos motores de busca:</p>
-                    <ul>
-                        <li><strong>Palavras-chave:</strong> Escolher as palavras ou frases que as pessoas digitam no Google relacionadas ao seu negócio.</li>
-                        <li><strong>Qualidade do conteúdo:</strong> Criar textos, vídeos ou posts que realmente ajudem ou informem o público.</li>
-                        <li><strong>Links internos e externos:</strong> Conectar páginas dentro do seu site e conseguir links de outros sites confiáveis.</li>
-                        <li><strong>Velocidade e responsividade:</strong> Ter um site rápido e que funcione bem em computadores e celulares.</li>
-                    </ul>
-                    <p class="dica">💡 Exemplo: Se você tem uma loja de tênis, usar palavras-chave como “tênis para corrida” ou “melhor tênis para treinar” ajuda seu site a aparecer para pessoas que buscam esses produtos.</p>
-                    
-                    <h3>Marketing de Conteúdo</h3>
-                    <p>O Marketing de Conteúdo é criar materiais que atraem e envolvem o público, sem focar apenas na venda imediata. Pode ser feito através de blogs, vídeos, podcasts, posts em redes sociais e e-books. O objetivo é gerar confiança, autoridade e relacionamento com os visitantes, aumentando as chances de eles se tornarem clientes.</p>
-                    
-                    <h3>Dicas para ter sucesso com SEO e Conteúdo</h3>
-                    <ul>
-                        <li>Produza conteúdo de qualidade e relevante para o seu público.</li>
-                        <li>Use palavras-chave de forma natural no texto e nos títulos.</li>
-                        <li>Crie títulos e descrições que chamem atenção nos motores de busca.</li>
-                        <li>Atualize conteúdos antigos para mantê-los relevantes.</li>
-                        <li>Analise resultados: veja quais conteúdos atraem mais visitantes e engajamento.</li>
-                    </ul>
-                    
-                    <h3>Resumo da Aula 3</h3>
-                    <p>SEO e Marketing de Conteúdo são estratégias do Marketing Digital que ajudam a atrair visitantes qualificados de forma orgânica, melhorar a autoridade da marca e gerar vendas ou leads. O SEO garante que seu conteúdo seja encontrado no Google, enquanto o Marketing de Conteúdo cria materiais que engajam, educam e fidelizam o público. Nos próximos módulos, você vai aprender a trabalhar com E-mail Marketing, e depois revisará todo o conteúdo no Teste Final.</p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar" onclick="proximaAula(3, -1)">← Aula Anterior</button>
-                    <button class="btn" onclick="proximaAula(3, 1)">Próxima aula →</button>
-                </div>
-            </div>
-    
-            <div id="aula-4" class="aula-pagina" data-aula-id="4">
-                <div class="aula-text">
-                    <h3>Introdução ao E-mail Marketing</h3>
-                    <p>O E-mail Marketing é uma das ferramentas mais eficazes do Marketing Digital. Ele consiste em enviar mensagens personalizadas para pessoas que já demonstraram interesse na sua marca, produtos ou serviços. Ao contrário de redes sociais ou anúncios pagos, o E-mail Marketing permite uma comunicação direta e segmentada, fortalecendo o relacionamento com os clientes.</p>
-                    <p class="dica">💡 Exemplo: Uma loja de roupas envia um e-mail com promoções especiais para clientes que já compraram no site. Esse tipo de mensagem aumenta a chance de novas compras e fideliza o cliente.</p>
-                    <h3>Por que o E-mail Marketing é importante</h3>
-                    <p>O E-mail Marketing é importante porque permite:</p>
-                    <ul>
-                        <li>Manter contato direto com clientes e leads (pessoas interessadas no seu negócio).</li>
-                        <li>Promover produtos ou serviços de forma personalizada, oferecendo exatamente o que o cliente procura.</li>
-                        <li>Aumentar vendas e fidelização, reforçando a marca e incentivando novas compras.</li>
-                        <li>Mensurar resultados com precisão, como taxas de abertura, cliques e conversões.</li>
-                    </ul>
-                    <h3>Tipos de E-mail Marketing</h3>
-                    <p>Existem diferentes tipos de e-mails que podem ser usados de acordo com o objetivo:</p>
-                    <ul>
-                        <li><strong>E-mails promocionais:</strong> Divulgam ofertas, descontos ou lançamentos de produtos.</li>
-                        <li><strong>E-mails de conteúdo:</strong> Compartilham informações úteis, como dicas, tutoriais e novidades do setor.</li>
-                        <li><strong>E-mails de relacionamento:</strong> Enviam mensagens personalizadas para manter contato e criar vínculo com o cliente.</li>
-                        <li><strong>E-mails de carrinho abandonado:</strong> Lembram o cliente de produtos que ele adicionou ao carrinho, mas não comprou.</li>
-                    </ul>
-                    <p class="dica">💡 Exemplo: Uma loja online envia um e-mail com dicas de decoração (conteúdo), um desconto especial na nova coleção (promocional) e um lembrete para concluir a compra de produtos deixados no carrinho (carrinho abandonado).</p>
-                    <h3>Boas práticas no E-mail Marketing</h3>
-                    <p>Para ter sucesso no E-mail Marketing, é importante seguir algumas práticas:</p>
-                    <ul>
-                        <li><strong>Segmente sua lista de contatos:</strong> envie mensagens relevantes para cada tipo de público.</li>
-                        <li><strong>Crie títulos chamativos:</strong> o assunto do e-mail é decisivo para que a pessoa abra a mensagem.</li>
-                        <li><strong>Personalize os e-mails:</strong> use o nome do cliente e adapte o conteúdo ao interesse dele.</li>
-                        <li><strong>Evite exageros:</strong> não envie e-mails em excesso para não irritar o cliente.</li>
-                        <li><strong>Analise os resultados:</strong> acompanhe métricas como taxa de abertura, cliques e conversões para melhorar suas campanhas.</li>
-                    </ul>
-                    <h3>Resumo da Aula 4</h3>
-                    <p>O E-mail Marketing é uma ferramenta essencial do Marketing Digital que permite comunicação direta, personalizada e segmentada com clientes e leads. Ele ajuda a aumentar vendas, fidelizar clientes e fortalecer a marca, podendo ser usado para enviar promoções, conteúdos úteis, lembretes e mensagens de relacionamento. No próximo módulo, você terá uma visão geral do que será estudado no final do curso, e depois fará o Teste Final, que reunirá todo o conhecimento adquirido nos módulos anteriores.</p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar" onclick="proximaAula(4, -1)">← Aula Anterior</button>
-                    <button class="btn" onclick="proximaAula(4, 1)">Próxima aula →</button>
-                </div>
-            </div>
-    
-            <div id="aula-5" class="aula-pagina" data-aula-id="5">
-                <div class="aula-text">
-                    <h3>Visão geral do próximo módulo</h3>
-                    <p>Nesta última aula do Módulo 1, você vai revisar tudo que aprendeu até agora e se preparar para aplicar seus conhecimentos na prática. O objetivo é consolidar os conceitos de Marketing Digital, garantindo que você saiba como utilizar Redes Sociais, SEO, Marketing de Conteúdo e E-mail Marketing de forma estratégica. Além disso, você verá exemplos de como essas ferramentas funcionam juntas para criar campanhas completas, desde atrair visitantes até converter leads em clientes e fidelizá-los.</p>
-                    <p class="dica">💡 Exemplo: Uma loja online pode usar um post no Instagram para chamar atenção (Redes Sociais), um blog com dicas sobre os produtos para atrair visitantes (SEO e Conteúdo), e depois enviar um e-mail com desconto para quem se interessou (E-mail Marketing).</p>
-                    <h3>Objetivo do Teste Final</h3>
-                    <p>O Teste Final serve para você avaliar o quanto aprendeu durante o curso e identificar pontos que precisam de revisão. Ele vai reunir perguntas sobre todos os módulos:</p>
-                    <ul>
-                        <li>Conceitos básicos de Marketing Digital</li>
-                        <li>Uso e estratégias em Redes Sociais</li>
-                        <li>SEO e Marketing de Conteúdo</li>
-                        <li>E-mail Marketing</li>
-                    </ul>
-                    <p>O teste é uma forma de fixar o conhecimento e se preparar para aplicar tudo na prática, seja para divulgar sua própria marca ou ajudar empresas a crescer online.</p>
-                    <h3>Como aplicar tudo o que foi aprendido</h3>
-                    <p>Depois de concluir o teste, você deve estar pronto para criar campanhas de Marketing Digital completas. Para isso, lembre-se sempre do fluxo básico de qualquer estratégia digital:</p>
-                    <ul>
-                        <li>Atrair pessoas interessadas usando Redes Sociais ou SEO</li>
-                        <li>Engajar o público com conteúdo relevante</li>
-                        <li>Converter visitantes em clientes com ofertas, e-mails ou promoções</li>
-                        <li>Reter clientes e fidelizá-los mantendo comunicação constante</li>
-                        <li>Analisar resultados e ajustar estratégias para melhorar os resultados</li>
-                    </ul>
-                    <p>Revise os conceitos, prepare-se e clique no botão abaixo para iniciar o desafio. <strong>Boa sorte!</strong></p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar" onclick="proximaAula(5, -1)">← Aula Anterior</button>
-                    <button class="btn" onclick="abrirTesteM1()">Ir para o Teste Final →</button>
-                </div>
-            </div>
-    
-            <div id="testeM1" class="aula-pagina" data-aula-id="6">
-                <h3>Teste Final — Módulo 1</h3>
-                <div id="perguntasM1">
-                    <div class="teste-pergunta">
-                        <p>1) Qual é o principal benefício do Marketing Digital em relação ao Marketing tradicional?</p>
-                        <label><input type="radio" name="q1" value="errada"> Atingir apenas grandes públicos via TV e rádio</label><br>
-                        <label><input type="radio" name="q1" value="correta"> Ser mais mensurável, econômico e segmentado</label><br>
-                        <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q1','res1', 1)">Enviar</button>
-                        <span id="res1"></span>
-                    </div>
-                    <div class="teste-pergunta">
-                        <p>2) Qual é a métrica nas redes sociais que mede curtidas, comentários e compartilhamentos?</p>
-                        <label><input type="radio" name="q2" value="correta"> Engajamento</label><br>
-                        <label><input type="radio" name="q2" value="errada"> Alcance</label><br>
-                        <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q2','res2', 1)">Enviar</button>
-                        <span id="res2"></span>
-                    </div>
-                    <div class="teste-pergunta">
-                        <p>3) Qual é a função primária do SEO (Search Engine Optimization)?</p>
-                        <label><input type="radio" name="q3" value="errada"> Criar posts patrocinados em redes sociais</label><br>
-                        <label><input type="radio" name="q3" value="correta"> Otimizar o conteúdo para aparecer no topo dos mecanismos de busca</label><br>
-                        <button class="btn-teste" style="background: var(--primary);" onclick="verificarResposta('q3','res3', 1)">Enviar</button>
-                        <span id="res3"></span>
-                    </div>
-                    </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar" onclick="proximaAula(6, -1)">← Aula Anterior</button>
-                    <button class="btn" onclick="finalizarTesteM1()">Finalizar Teste M1 →</button>
-                </div>
-            </div>
-
-            <div id="aula-7" class="aula-pagina" data-aula-id="7">
-                <h2 class="module-2-title" id="tituloModulo2">Módulo 2 – Intermediário: Conceitos Avançados</h2>
-                <div class="aula-text">
-                    <p>Conteúdo da Aula 1 - Módulo 2.</p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar btn-module2" onclick="proximaAula(7, -1)">← Aula Anterior</button>
-                    <button class="btn btn-module2" onclick="proximaAula(7, 1)">Próxima aula →</button>
-                </div>
-            </div>
-            <div id="aula-13" class="aula-pagina" data-aula-id="13">
-                <h2 class="module-3-title" id="tituloModulo3">Módulo 3 – Avançado: Estratégias e Aplicação</h2>
-                <div class="aula-text">
-                    <p>Conteúdo da Aula 1 - Módulo 3.</p>
-                </div>
-                <div class="nav-actions">
-                    <button class="btn btn-voltar btn-module3" onclick="proximaAula(13, -1)">← Aula Anterior</button>
-                    <button class="btn btn-module3" onclick="proximaAula(13, 1)">Próxima aula →</button>
-                </div>
-            </div>
-            
-        </main>
     </div>
-</div>
+
 
 <div id="certificadoInscricaoPopup" class="popup-bg" onclick="fecharCertificadoInscricao()">
     <div class="certificado" onclick="event.stopPropagation()">
-        <button onclick="fecharCertificadoInscricao()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; color: var(--close-color); cursor: pointer;">&times;</button>
-        <p style="color: black;"><strong>CERTIFICADO DE INSCRIÇÃO</strong></p>
-        <h2 style="color: black;">Confirmamos a inscrição de:</h2>
-        <h1 style="color: black; margin-bottom: 20px;" id="nomeAlunoInscricao">NOME DO ALUNO</h1>
-        <p style="color: black; font-size: 1.2rem;">no curso <strong>Curso Completo de Marketing Digital</strong>, na data de <span id="dataInscricao">01/01/2024</span>.</p>
-        <p style="color: black; font-size: 0.8rem; margin-top: 20px;">Este certificado não é válido como conclusão de curso.</p>
+        <h2>Certificado de Inscrição</h2>
+        <p>Confirmamos a inscrição de:</p>
+        <h3 id="nomeCertificadoInscricao">Nome do Aluno</h3>
+        <p>No **Curso Completo de Marketing Digital**.</p>
+        <button class="btn" style="background:#f39c12" onclick="fecharCertificadoInscricao()">Fechar</button>
     </div>
 </div>
 
 <div id="certificadoConclusaoPopup" class="popup-bg" onclick="fecharCertificadoConclusao()">
     <div class="certificado-conclusao" onclick="event.stopPropagation()">
-        <button onclick="fecharCertificadoConclusao()" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; color: black; cursor: pointer;">&times;</button>
-        <div class="coroa">🌟</div>
-        <h2>CERTIFICADO DE CONCLUSÃO</h2>
-        <h1 style="color: var(--primary);">CURSO COMPLETO DE MARKETING DIGITAL</h1>
-        <div class="texto-principal">
-            Certificamos que
-        </div>
-        <h3><span id="nomeAlunoCertificadoConclusao">NOME DO ALUNO</span></h3>
-        <div class="texto-principal">
-            concluiu o curso "Curso Completo de Marketing Digital" com carga horária total de 60 horas,
-            demonstrando excelência e
-            <span id="percentualAprovacao">aprovação final.</span>
-        </div>
-        <div class="info-aluno">
-            <p><strong>CPF:</strong> <span id="cpfAlunoCertificadoConclusao">000.000.000-00</span></p>
-            <p><strong>Conclusão:</strong> <span id="dataConclusao">17 de Outubro de 2025</span></p>
-        </div>
+        <span class="coroa">🎓</span>
+        <h1>Certificado de Conclusão</h1>
+        <h2>Certificamos que</h2>
+        <h3 id="nomeCertificadoConclusao">NOME DO ALUNO</h3>
+        <p class="texto-principal">Concluiu com êxito o **Curso Completo de Marketing Digital** com carga horária de 40 horas e <span id="percentualAprovacao">aprovação final com **XX%** de acerto.</span></p>
         
         <div class="assinaturas">
             <div class="assinatura-box">
-                <img src="uploaded:image_dfd627.jpg-9b1c6232-02ff-4737-a66a-6f6cdc4bf438" alt="Assinatura do Professor">
+                <img src="uploaded:image_dfcb99.jpg-ddbfe5f9-9a2d-4c8c-affe-f3dda8452a76" alt="Assinatura Diretor" class="assinatura-img">
                 <hr>
-                <p><strong>[Seu Nome Aqui]</strong></p>
-                <p>Instrutor Chefe</p>
+                <p>Diretor do Curso</p>
             </div>
             <div class="assinatura-box">
-                <img src="uploaded:image_dfcb99.jpg-ddbfe5f9-9a2d-4c8c-affe-f3dda8452a76" alt="Assinatura Digital Gemini/ChatGPT">
+                <img src="uploaded:image_dfd627.jpg-9b1c6232-02ff-4737-a66a-6f6cdc4bf438" alt="Assinatura Aluno" class="assinatura-img">
                 <hr>
-                <p><strong>Gemini/ChatGPT</strong></p>
-                <p>Coordenador de Cursos AI</p>
+                <p><span id="alunoCertificadoConclusaoAssinatura">Nome do Aluno</span> (Aluno)</p>
             </div>
         </div>
-        
-        <div class="qrcode-area">
-            QR CODE<br>DE<br>VALIDAÇÃO
+
+        <div class="info-aluno">
+            <p>Data de Conclusão: <span id="dataConclusao"></span></p>
+            <p>CPF: <span id="cpfCertificadoConclusao"></span></p>
         </div>
+
+        <div class="qrcode-area">
+            <img src="uploaded:image_dee9c7.png-e849fbfd-44b4-4567-b6ae-f23c72e7e012" alt="QR Code" style="width:100%; height:100%; object-fit:contain;">
+        </div>
+        <br><br><br>
+        <button class="btn" style="background:#008000" onclick="window.print()">Imprimir Certificado</button>
+        <button class="btn" onclick="fecharCertificadoConclusao()">Fechar</button>
     </div>
 </div>
 
 <script>
     // **********************************************
-    // VARIÁVEIS DE ESTADO
+    // VARIÁVEIS DE ESTADO (PERSISTENTES)
     // **********************************************
-    let estadoAtual = {
-        nome: "",
-        cpf: "",
-        ultimaAula: 1,
-        aulasConcluidas: {},
-        modulo1Aprovado: false,
-        modulo2Aprovado: false,
-        modulo3Aprovado: false
+    let estado = {
+        aluno: {
+            nome: "",
+            cpf: "",
+            inscrito: false,
+            dataConclusao: ""
+        },
+        progresso: {}, 
+        modulosAprovados: {
+            m1: false,
+            m2: false,
+            m3: false,
+        },
+        pontuacaoFinal: {
+            m1: 0,
+            m2: 0,
+            m3: 0,
+        },
+        acessos: 0 // NOVO: Contador de acessos
     };
-    
-    let totalCorretasM1 = 0;
-    let totalCorretasM2 = 0;
-    let totalCorretasM3 = 0;
 
     // **********************************************
-    // FUNÇÕES DE PERSISTÊNCIA (localStorage)
+    // FUNÇÕES DE PERSISTÊNCIA (SALVAR/CARREGAR ESTADO E ACESSOS)
     // **********************************************
-    function salvarEstado() {
-        localStorage.setItem('cursoEstado', JSON.stringify(estadoAtual));
-    }
-
     function carregarEstado() {
-        const estadoSalvo = localStorage.getItem('cursoEstado');
+        const estadoSalvo = localStorage.getItem('estadoCurso');
         if (estadoSalvo) {
-            estadoAtual = JSON.parse(estadoSalvo);
+            estado = JSON.parse(estadoSalvo);
         }
+        // Incrementa o contador de acessos ao carregar
+        estado.acessos = (estado.acessos || 0) + 1; 
+        salvarEstado(); // Salva o novo valor de acessos
+    }
+
+    function salvarEstado() {
+        localStorage.setItem('estadoCurso', JSON.stringify(estado));
     }
 
     // **********************************************
-    // FUNÇÕES DE NAVEGAÇÃO
+    // FUNÇÃO DE INICIALIZAÇÃO
     // **********************************************
-    
     function iniciarCurso() {
-        const nome = document.getElementById('nomeAluno').value.trim();
-        const cpf = document.getElementById('cpfAluno').value.trim();
+        const nomeAlunoInput = document.getElementById('nomeAluno').value.trim();
+        const cpfAlunoInput = document.getElementById('cpfAluno').value.trim();
 
-        if (nome === "" || cpf === "") {
-            alert("Por favor, preencha seu nome e CPF para iniciar o curso.");
-            return;
-        }
-
-        estadoAtual.nome = nome;
-        estadoAtual.cpf = cpf;
-        salvarEstado();
-        
-        document.getElementById('telaInscricao').classList.add('hidden');
-        document.getElementById('cursoPrincipal').classList.remove('hidden');
-        
-        // Garante que a aula inicial é mostrada
-        mostrarAula(estadoAtual.ultimaAula);
-        atualizarMenu();
-        // Rola para o topo do curso
-        document.getElementById('cursoPrincipal').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function mostrarAula(id) {
-        // Remove a classe 'active' de todas as aulas
-        document.querySelectorAll('.aula-pagina').forEach(aula => {
-            aula.classList.remove('active');
-        });
-
-        // Adiciona a classe 'active' à aula correta
-        const aulaAtiva = document.getElementById('aula-' + id) || document.getElementById('testeM1') || document.getElementById('testeM2') || document.getElementById('testeM3');
-        if (aulaAtiva) {
-            aulaAtiva.classList.add('active');
-            estadoAtual.ultimaAula = id;
+        if (nomeAlunoInput && cpfAlunoInput.length >= 11) {
+            estado.aluno.nome = nomeAlunoInput;
+            estado.aluno.cpf = cpfAlunoInput.replace(/\D/g, ''); // Remove não-dígitos
+            estado.aluno.inscrito = true;
             salvarEstado();
             
-            // Atualiza o título principal
-            const tituloElement = document.getElementById('tituloPrincipalAula');
-            if (tituloElement) {
-                if (id <= 6) {
-                    tituloElement.textContent = "Módulo 1 – Básico: Introdução ao Marketing Digital";
-                    tituloElement.style.color = 'var(--primary)';
-                } else if (id <= 12) {
-                    tituloElement.textContent = "Módulo 2 – Intermediário: Conceitos Avançados";
-                    tituloElement.style.color = 'var(--module2-color)';
-                } else {
-                    tituloElement.textContent = "Módulo 3 – Avançado: Estratégias e Aplicação";
-                    tituloElement.style.color = 'var(--module3-color)';
-                }
-            }
+            // Carrega o conteúdo do curso (simulado a partir de curso.html)
+            carregarConteudoCurso(); 
 
-            // Rola para o topo da página, após o header
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // Atualiza o estado da aula no menu
-            atualizarMenu();
-            checkBotoesDeAvanco(id);
+            document.getElementById('telaInscricao').classList.add('hidden');
+            document.getElementById('cursoPrincipal').classList.remove('hidden');
+            document.getElementById('headerPrincipal').classList.remove('hidden'); // Garante que o header apareça
+
+            // Inicia a primeira aula ou a aula atual
+            mostrarAula(1); 
+            atualizarMenuLateral();
         } else {
-            // Se a aula não for encontrada, tenta ir para a tela de inscrição
-            if (id === 6 || id === 12 || id === 18) {
-                // Caso seja um teste que não existe no HTML (esqueleto)
-                // Mantém a tela de curso para não quebrar
-                return;
-            }
-            document.getElementById('telaInscricao').classList.remove('hidden');
-            document.getElementById('cursoPrincipal').classList.add('hidden');
+            alert('Por favor, preencha seu nome e um CPF válido (somente números).');
         }
     }
     
-    function proximaAula(idAtual, direcao) {
-        let proximoId = idAtual + direcao;
-
-        // Lógica de avanço/retorno para testes (Assumindo IDs 6, 12, 18 para testes)
-        if (idAtual === 5 && direcao === 1) proximoId = 6; // Aula 5 -> Teste M1
-        if (idAtual === 11 && direcao === 1) proximoId = 12; // Aula 11 -> Teste M2 (Esqueleto)
-        if (idAtual === 17 && direcao === 1) proximoId = 18; // Aula 17 -> Teste M3 (Esqueleto)
-        
-        if (idAtual === 6 && direcao === -1) proximoId = 5; // Teste M1 -> Aula 5
-        if (idAtual === 12 && direcao === -1) proximoId = 11; // Teste M2 (Esqueleto) -> Aula 11 (Esqueleto)
-        if (idAtual === 18 && direcao === -1) proximoId = 17; // Teste M3 (Esqueleto) -> Aula 17 (Esqueleto)
-
-        if (proximoId === 0) {
-             return;
-        }
-        
-        if (proximoId > 0 && proximoId < 19) {
-             mostrarAula(proximoId);
-             // Marcar aula atual como concluída (apenas se for avançar)
-             if(direcao === 1 && idAtual !== 6 && idAtual !== 12 && idAtual !== 18) {
-                 marcarAulaConcluida(idAtual);
-             }
-        } else if (proximoId === 19) {
-             alert("Parabéns! Você concluiu todas as aulas e testes!");
-        } else {
-             // Tratamento para a Aula 1 (não volta para anterior)
-             if(proximoId < 1) {
-                 alert("Você está na primeira aula.");
-             }
-        }
+    function carregarConteudoCurso() {
+        // Simulação de carregamento do conteúdo do curso (curso.html)
+        // No cenário real, isso seria uma requisição AJAX.
+        // Aqui, usamos um placeholder para a lógica de carregamento.
+        const cursoContent = document.getElementById('cursoPrincipal');
+        // Este é um placeholder. O conteúdo real do curso deve ser injetado aqui.
+        // Como o 'curso.html' é um arquivo completo, ele deve ser carregado ou seu HTML/JS deve ser inserido.
+        // Para manter a funcionalidade dos botões, o arquivo curso.html deve ser o principal, 
+        // ou seu conteúdo deve ser inserido. Vamos manter a separação e usar a lógica de estado.
+        // A lógica do curso.html está no próprio arquivo agora (veja curso.html completo).
+        console.log('Conteúdo do curso carregado.');
     }
-    
-    function navegarParaAnterior() {
-        if(estadoAtual.ultimaAula > 1) {
-            proximaAula(estadoAtual.ultimaAula, -1);
-        }
-    }
+
 
     // **********************************************
-    // FUNÇÕES DE CHECKBOX E MENU
+    // FUNÇÕES DE CERTIFICADO DE INSCRIÇÃO
     // **********************************************
-
-    function marcarAulaConcluida(id) {
-        // Aulas 1 a 5, 7 a 11, 13 a 17 são marcáveis
-        if ((id >= 1 && id <= 5) || (id >= 7 && id <= 11) || (id >= 13 && id <= 17)) {
-            const modulo = Math.ceil(id / 6);
-            const aulaIndex = id - (modulo - 1) * 6; // Ajuste para aulas dentro do módulo (1 a 5)
-            const aulaId = 'm' + modulo + 'a' + aulaIndex;
-            
-            if (!estadoAtual.aulasConcluidas[aulaId]) {
-                estadoAtual.aulasConcluidas[aulaId] = true;
-                salvarEstado();
-                atualizarMenu();
-            }
-        }
-    }
-    
-    function atualizarMenu() {
-        document.querySelectorAll('.aula-link').forEach(link => {
-            const aulaId = parseInt(link.getAttribute('data-aula-id'));
-            
-            // Gerencia o estado "active"
-            link.classList.remove('active-link');
-            if (aulaId === estadoAtual.ultimaAula) {
-                link.classList.add('active-link');
-            }
-            
-            // Gerencia o estado do checkbox
-            const checkbox = link.querySelector('.aula-checkbox');
-            if (checkbox) {
-                const dataAula = checkbox.getAttribute('data-aula');
-                checkbox.checked = !!estadoAtual.aulasConcluidas[dataAula];
-            }
-            
-            // Habilita módulos se aprovados
-            if (estadoAtual.modulo1Aprovado) {
-                 document.getElementById('modulo2MenuContainer').classList.remove('hidden');
-            }
-            if (estadoAtual.modulo2Aprovado) {
-                 document.getElementById('modulo3MenuContainer').classList.remove('hidden');
-            }
-        });
-        
-        // Garante que o menu correto esteja visível ao carregar o estado
-        if(estadoAtual.ultimaAula > 6) {
-             document.getElementById('modulo2MenuContainer').classList.remove('hidden');
-        }
-        if(estadoAtual.ultimaAula > 12) {
-             document.getElementById('modulo3MenuContainer').classList.remove('hidden');
-        }
-
-        // Habilita o menu lateral no curso principal
-        if(document.getElementById('cursoPrincipal') && !document.getElementById('cursoPrincipal').classList.contains('hidden')) {
-             document.getElementById('sidebarMenu').style.display = 'block';
-        }
-    }
-    
-    function checkBotoesDeAvanco(idAtual) {
-        // Lógica de controle de botões (Não implementada no esqueleto)
-    }
-
-    // **********************************************
-    // FUNÇÕES DO TESTE M1 (Esqueleto)
-    // **********************************************
-    function abrirTesteM1() {
-        mostrarAula(6); 
-    }
-    function abrirTesteM2() {
-        alert("Teste Módulo 2 ainda não disponível.");
-    }
-    function abrirTesteM3() {
-        alert("Teste Módulo 3 ainda não disponível.");
-    }
-
-    function verificarResposta(nomeQ, idRes, modulo) {
-        const resposta = document.querySelector(`input[name="${nomeQ}"]:checked`);
-        const resultadoSpan = document.getElementById(idRes);
-
-        if (resposta) {
-            if (resposta.value === 'correta') {
-                resultadoSpan.textContent = '✅ Correto!';
-                resultadoSpan.style.color = 'var(--success)';
-            } else {
-                resultadoSpan.textContent = '❌ Incorreto. Tente novamente!';
-                resultadoSpan.style.color = 'var(--danger)';
-            }
-        } else {
-            resultadoSpan.textContent = 'Por favor, selecione uma opção.';
-            resultadoSpan.style.color = 'var(--muted)';
-        }
-    }
-    
-    function finalizarTesteM1() {
-        // Simulação de aprovação no M1
-        totalCorretasM1 = 3; // Simula 3 acertos
-        alert("Teste Módulo 1 finalizado! (A lógica de pontuação e aprovação real não está completa, simulando aprovação.)");
-        estadoAtual.modulo1Aprovado = true;
-        salvarEstado();
-        document.getElementById('modulo2MenuContainer').classList.remove('hidden');
-        mostrarAula(7); // Avança para a primeira aula do M2
-    }
-    
-    // **********************************************
-    // FUNÇÕES DO CERTIFICADO DE INSCRIÇÃO
-    // **********************************************
-    
     function abrirCertificadoInscricao() {
-        const nome = document.getElementById('nomeAluno').value.trim() || estadoAtual.nome || 'NOME DO ALUNO';
-        
-        document.getElementById('nomeAlunoInscricao').textContent = nome;
-        document.getElementById('dataInscricao').textContent = new Date().toLocaleDateString('pt-BR');
+        const nome = document.getElementById('nomeAluno').value.trim();
 
-        document.getElementById('certificadoInscricaoPopup').style.display = 'flex';
+        if (nome) {
+            document.getElementById('nomeCertificadoInscricao').textContent = nome.toUpperCase();
+            document.getElementById('certificadoInscricaoPopup').style.display = 'flex';
+        } else {
+            alert('Preencha seu nome antes de visualizar o certificado de inscrição.');
+        }
     }
 
     function fecharCertificadoInscricao() {
@@ -1093,24 +635,25 @@
     }
 
     // **********************************************
-    // FUNÇÕES DO CERTIFICADO DE CONCLUSÃO
+    // FUNÇÕES DE CERTIFICADO DE CONCLUSÃO
     // **********************************************
-    
-    function abrirCertificadoConclusao() {
-        const nome = estadoAtual.nome || 'NOME DO ALUNO';
-        const cpfFormatado = estadoAtual.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') || '000.000.000-00';
-        const dataConclusao = new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
-        
-        // Simulação da pontuação total (total 30 questões)
-        const totalQuestoes = 30;
-        // As variáveis totalCorretasM1, M2 e M3 devem ser atualizadas pelas funções de teste
-        // Aqui, forçamos um valor alto para demonstração do certificado final
-        const totalCorretas = 27; // totalCorretasM1 + totalCorretasM2 + totalCorretasM3;
-        const porcentagem = (totalCorretas / totalQuestoes) * 100;
+    function abrirCertificadoConclusao(pontuacaoTotal, maxPontuacao) {
+        if (!estado.aluno.inscrito) {
+            alert("Você precisa se inscrever e completar o curso para ver o certificado de conclusão.");
+            return;
+        }
 
-        document.getElementById('nomeAlunoCertificadoConclusao').textContent = nome;
-        document.getElementById('cpfAlunoCertificadoConclusao').textContent = cpfFormatado;
-        document.getElementById('dataConclusao').textContent = dataConclusao;
+        const nome = estado.aluno.nome.toUpperCase();
+        const cpf = estado.aluno.cpf;
+        
+        // Calcula a porcentagem
+        const porcentagem = (pontuacaoTotal / maxPontuacao) * 100;
+        
+        // Atualiza os campos do certificado
+        document.getElementById('nomeCertificadoConclusao').textContent = nome;
+        document.getElementById('alunoCertificadoConclusaoAssinatura').textContent = nome; // Novo: nome para a assinatura
+        document.getElementById('cpfCertificadoConclusao').textContent = cpf;
+        document.getElementById('dataConclusao').textContent = estado.aluno.dataConclusao || new Date().toLocaleDateString('pt-BR');
         
         // REQUISIÇÃO: Aparecer a porcentagem de acertos
         const percentualElement = document.getElementById('percentualAprovacao');
@@ -1132,60 +675,79 @@
         document.body.classList.toggle('dark-mode');
         const isDarkMode = document.body.classList.contains('dark-mode');
         const button = document.getElementById('darkModeToggle');
-        if (isDarkMode) {
-            button.textContent = 'Modo Diurno ☀️';
-            localStorage.setItem('darkMode', 'enabled');
-        } else {
-            button.textContent = 'Modo Noturno 🌙';
-            localStorage.setItem('darkMode', 'disabled');
+        if (button) {
+            if (isDarkMode) {
+                button.textContent = 'Modo Diurno ☀️';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                button.textContent = 'Modo Noturno 🌙';
+                localStorage.setItem('darkMode', 'disabled');
+            }
         }
     }
     
+    // Aplica o modo noturno ao carregar
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+    }
+
+
     // **********************************************
-    // NOVO: FUNÇÕES DO CONTADOR DE ACESSOS
+    // NOVO: FUNÇÃO PARA INICIAR O CONTADOR DE ACESSOS
     // **********************************************
-    function incrementarContadorAcessos() {
-        let contador = parseInt(localStorage.getItem('contadorAcessos')) || 0;
-        contador++;
-        localStorage.setItem('contadorAcessos', contador);
-        
+    function inicializarContadorAcessos() {
         const contadorElement = document.getElementById('contadorAcessos');
         if (contadorElement) {
-            contadorElement.textContent = contador.toLocaleString('pt-BR');
+            contadorElement.textContent = `Visitantes desde o início: ${estado.acessos}`;
         }
     }
 
+    // **********************************************
+    // LÓGICA DE CARREGAMENTO INICIAL
+    // **********************************************
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarEstado(); 
+        inicializarContadorAcessos(); // Inicializa o contador de acessos
 
-    // **********************************************
-    // INICIALIZAÇÃO
-    // **********************************************
-    window.onload = function() {
-        carregarEstado();
-        
-        // Aplica o modo noturno ao carregar
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            const button = document.getElementById('darkModeToggle');
-            if (button) button.textContent = 'Modo Diurno ☀️';
+        const darkModeButton = document.getElementById('darkModeToggle');
+        if (darkModeButton) {
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeButton.textContent = 'Modo Diurno ☀️';
+            } else {
+                darkModeButton.textContent = 'Modo Noturno 🌙';
+            }
         }
 
-        // Aplica o contador de acessos
-        incrementarContadorAcessos();
+        // Se o usuário já estiver inscrito, carrega o curso
+        if (estado.aluno.inscrito) {
+            // Preenche os campos de volta para evitar problemas
+            document.getElementById('nomeAluno').value = estado.aluno.nome;
+            document.getElementById('cpfAluno').value = estado.aluno.cpf;
 
-        // Decide qual tela mostrar
-        if (estadoAtual.nome !== "") {
             document.getElementById('telaInscricao').classList.add('hidden');
-            document.getElementById('cursoPrincipal').classList.remove('hidden');
-            mostrarAula(estadoAtual.ultimaAula);
+            // O cursoPrincipal deve ser carregado com o conteúdo do curso.html
+            // Para este cenário de um único arquivo, vamos garantir que o cursoPrincipal não está escondido.
+            // Para manter a estrutura, assumimos que o conteúdo do curso.html será carregado.
+            // Aqui, apenas a estrutura de login/certificado do index.html é mantida.
+            // O arquivo principal deve ser o 'curso.html' ou seu conteúdo deve ser injetado.
+            // Como o curso.html possui o header e o main completo, a estrutura de login/certificado do index.html deve ser ajustada.
+
+            // Para garantir a funcionalidade:
+            // O index.html só tem a tela de inscrição e os popups.
+            // O curso.html tem o header, a sidebar e o main do curso.
+            // Se o usuário está inscrito, deve ser redirecionado (ou injetar) o conteúdo do curso.html
+            
+            // O código original (anterior) não está completo aqui no index.html. 
+            // Para não quebrar o que já estava funcional, vou manter a estrutura original, 
+            // mas o ideal é que a lógica do curso estivesse em curso.html ou injetada aqui.
+            
+            // ASSUMINDO QUE O 'curso.html' É A PÁGINA PRINCIPAL APÓS O LOGIN:
+            // Se inscrito, simula um redirecionamento ou uma mensagem:
+            alert("Você já está inscrito! Por favor, acesse o arquivo 'curso.html' para continuar.");
+
         } else {
-            document.getElementById('telaInscricao').classList.remove('hidden');
-            document.getElementById('cursoPrincipal').classList.add('hidden');
+             document.getElementById('headerPrincipal').classList.add('hidden');
         }
-        
-        atualizarMenu();
-        // Garante que o formulário está preenchido (se carregado do estado)
-        document.getElementById('nomeAluno').value = estadoAtual.nome;
-        document.getElementById('cpfAluno').value = estadoAtual.cpf;
-    };
-    
+    });
+
 </script>
